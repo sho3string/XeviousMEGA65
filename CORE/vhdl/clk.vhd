@@ -1,14 +1,14 @@
 -------------------------------------------------------------------------------------------------------------
--- Galaga Arcade Core for the MEGA65 
+-- Xevious Arcade Core for the MEGA65 
 --
 -- Clock Generator using the Xilinx specific MMCME2_ADV:
 --
--- The MiSTer Galaga core needs these clocks:
+-- The MiSTer Xevious core needs these clocks:
 --
 --    18 MHz main clock
 --    48 MHz video clock
 --
--- Galaga port done by Samuel P ( Muse ) in 2023
+-- Xevious port done by Samuel P ( Muse ) in 2023
 -- MiSTer2MEGA65 done by sy2002 and MJoergen in 2022 and licensed under GPL v3
 -------------------------------------------------------------------------------------------------------------
 
@@ -26,8 +26,8 @@ entity clk is
       sys_clk_i       : in  std_logic;   -- expects 100 MHz
       sys_rstn_i      : in  std_logic;   -- Asynchronous, asserted low
 
-      main_clk_o      : out std_logic;   -- Galaga's 18 MHz main clock
-      main_rst_o      : out std_logic;   -- Galaga's reset, synchronized
+      main_clk_o      : out std_logic;   -- Xevious's 18 MHz main clock
+      main_rst_o      : out std_logic;   -- Xevious's reset, synchronized
       
       video_clk_o     : out std_logic;   -- video clock 48 MHz
       video_rst_o     : out std_logic    -- video reset, synchronized

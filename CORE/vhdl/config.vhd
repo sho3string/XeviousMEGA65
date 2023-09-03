@@ -76,7 +76,7 @@ type WHS_RECORD_ARRAY_TYPE is array (0 to WHS_RECORDS - 1) of WHS_RECORD_TYPE;
 
 constant SCR_WELCOME : string :=
 
-   "Galaga V0.5.1 (beta)\n" &
+   "Xevious V0.5.1 (beta)\n" &
    "--------------------\n" &
    "\n" &
    "MiSTer port done by Muse in 2023\n\n" &
@@ -88,7 +88,7 @@ constant SCR_WELCOME : string :=
    "Credits  : Press '5' or '6'\n"        & 
    "Start    : Press '1' or '2'\n"        &
    "Pause    : Press 'p'\n"               &
-   "Controls : Joy 1 or a,d, up_arrow\n"  &
+   "Controls : Joy 1 or arrows & space\n" &
    "Svc 1    : Press 's' \n"              &
    "Svc Mode : Caps-Lock on\n"            &
    "\n\n    Press Space to continue.\n"; 
@@ -185,8 +185,8 @@ constant SEL_CFG_FILE      : std_logic_vector(15 downto 0) := x"0101";
 
 -- START YOUR CONFIGURATION BELOW THIS LINE
 
-constant DIR_START         : string := "/arcade/galaga";
-constant CFG_FILE          : string := "/arcade/galaga/glgcfg";
+constant DIR_START         : string := "/arcade/xevious";
+constant CFG_FILE          : string := "/arcade/xevious/xevcfg";
 
 --------------------------------------------------------------------------------------------------------------------
 -- General configuration settings: Reset, Pause, OSD behavior, Ascal, etc. (Selector 0x0110)
@@ -267,8 +267,8 @@ constant SEL_CORENAME      : std_logic_vector(15 downto 0) := x"0200";
 -- START YOUR CONFIGURATION BELOW THIS LINE
 
 -- Currently this is only used in the debug console. Use the welcome screen and the
--- help system to display the name and version of the Galaga core to the end user
-constant CORENAME          : string := "Galaga V1";
+-- help system to display the name and version of the Xevious core to the end user
+constant CORENAME          : string := "Xevious V1";
 
 --------------------------------------------------------------------------------------------------------------------
 -- "Help" menu / Options menu  (Selectors 0x0300 .. 0x0312): DO NOT TOUCH
@@ -331,7 +331,7 @@ constant OPTM_DX           : natural := 23;
 constant OPTM_DY           : natural := 23;
 
 constant OPTM_ITEMS        : string :=
-   " Galaga\n"              &
+   " Xevious\n"              &
    "\n"                     &
    " Pause when OSD open\n" &
    " Dim Video after 10s\n" &
@@ -365,51 +365,51 @@ constant OPTM_ITEMS        : string :=
    "\n"                     &
    " Game Setup\n"          &
    "\n"                     &
-   " Midway version\n"      &
+   " Atari version\n"       &
    " Namco  version\n"      &
    "\n"                     & 
-   " Midway dip switches\n" &
+   " Atari dip switches\n"  &
    " DSW A & B\n"           &
    "\n"                     &
-   " 0 - 2 Credits Game\n"  &
-   " 1 - Difficulty A\n"    &
-   " 2 - Difficulty B\n"    &
-   " 3 - Demo Sounds\n"     &
-   " 4 - Freeze\n"          &
-   " 5 - Rack Test\n"       &
-   " 6 - Unused\n"          &
-   " 7 - Cabinet Type\n"    &
+   " 0 - Auto fire\n"       &
+   " 1 - Unusede\n"         &
+   " 2 - Coin B - A\n"      &
+   " 3 - Coin B - B\n"      &
+   " 4 - Unused\n"          &
+   " 5 - Difficulty A\n"    &
+   " 6 - Difficulty B\n"    &
+   " 7 - Unused\n"          &
    "\n"                     &
    " 0 - Coinage A\n"       &
    " 1 - Coinage B\n"       &
-   " 2 - Coinage C\n"       &
-   " 3 - Bonus Life A\n"    &
-   " 4 - Bonus Life B\n"    &
-   " 5 - Bonus Life C\n"    &
-   " 6 - Lives A\n"         &
-   " 7 - Lives B\n"         &
+   " 2 - Bonus Life A\n"    &
+   " 3 - Bonus Life B\n"    &
+   " 4 - Bonus Life C\n"    &
+   " 5 - Lives A\n"         &
+   " 6 - Lives B\n"         &
+   " 7 - Coin counters\n"   &
    "\n"                     &
    " Back to main menu\n"   &
    " Namco  dip switches\n" &
    " DSW A & B\n"           &
    "\n"                     &
-   " 0 - Difficulty A\n"    &
-   " 1 - Difficulty B\n"    &
-   " 2 - Unused\n"    		&
-   " 3 - Demo Sounds\n"     &
-   " 4 - Freeze\n"          &
-   " 5 - Rack Test\n"       &
-   " 6 - Unused\n"          &
-   " 7 - Cabinet Type\n"    &
+   " 0 - Unused\n"          &
+   " 1 - FA Bonus Life\n"   &
+   " 2 - Coin B - A\n"      &
+   " 3 - Coin B - B\n"      &
+   " 4 - Unused\n"          &
+   " 5 - Difficulty A\n"    &
+   " 6 - Difficulty B\n"    &
+   " 7 - Freeze\n"          &
    "\n"                     &
    " 0 - Coinage A\n"       &
    " 1 - Coinage B\n"       &
-   " 2 - Coinage C\n"       &
-   " 3 - Bonus Life A\n"    &
-   " 4 - Bonus Life B\n"    &
-   " 5 - Bonus Life C\n"    &
-   " 6 - Lives A\n"         &
-   " 7 - Lives B\n"         &
+   " 2 - Bonus Life A\n"    &
+   " 3 - Bonus Life B\n"    &
+   " 4 - Bonus Life C\n"    &
+   " 5 - Lives A\n"         &
+   " 6 - Lives B\n"         &
+   " 7 - Cabinet\n"         &
    "\n"                     &
    " Back to main menu\n"   &
    "\n"                     &

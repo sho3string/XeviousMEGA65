@@ -24,8 +24,8 @@ port (
    RESET_M2M_N             : in  std_logic;              -- Debounced system reset in system clock domain
 
    -- Share clock and reset with the framework
-   main_clk_o              : out std_logic;              -- Galaga's 18 MHz main clock
-   main_rst_o              : out std_logic;              -- Galaga's reset, synchronized
+   main_clk_o              : out std_logic;              -- Xevious's 18 MHz main clock
+   main_rst_o              : out std_logic;              -- Xevious's reset, synchronized
    
    video_clk_o             : out std_logic;              -- video clock 48 MHz
    video_rst_o             : out std_logic;              -- video reset, synchronized
@@ -165,10 +165,10 @@ signal video_rst           : std_logic;
 -- main_clk (MiSTer core's clock)
 ---------------------------------------------------------------------------------------------
 
--- Unprocessed video output from the Galaga core
-signal main_video_red      : std_logic_vector(2 downto 0);   
-signal main_video_green    : std_logic_vector(2 downto 0);
-signal main_video_blue     : std_logic_vector(1 downto 0);
+-- Unprocessed video output from the Xevious core
+signal main_video_red      : std_logic_vector(3 downto 0);   
+signal main_video_green    : std_logic_vector(3 downto 0);
+signal main_video_blue     : std_logic_vector(3 downto 0);
 signal main_video_vs       : std_logic;
 signal main_video_hs       : std_logic;
 signal main_video_hblank   : std_logic;
@@ -240,7 +240,7 @@ constant C_MENU_NAMCO_DSWA_6  : natural := 77;
 constant C_MENU_NAMCO_DSWA_7  : natural := 78;
 
 
--- Galaga specific video processing
+-- Xevious specific video processing
 signal div                    : std_logic_vector(2 downto 0);
 signal dim_video              : std_logic;
 signal dsw_a_i                : std_logic_vector(7 downto 0);
@@ -273,8 +273,8 @@ signal ddram_data       : std_logic_vector(63 downto 0);
 signal ddram_be         : std_logic_vector( 7 downto 0);
 signal ddram_we         : std_logic;
 
--- ROM devices for Galaga
-signal qnice_dn_addr    : std_logic_vector(15 downto 0);
+-- ROM devices for Xevious
+signal qnice_dn_addr    : std_logic_vector(16 downto 0);
 signal qnice_dn_data    : std_logic_vector(7 downto 0);
 signal qnice_dn_wr      : std_logic;
 
@@ -311,8 +311,8 @@ begin
          sys_clk_i         => CLK,             -- expects 100 MHz
          sys_rstn_i        => RESET_M2M_N,     -- Asynchronous, asserted low
          
-         main_clk_o        => main_clk,        -- Galaga's 18 MHz main clock
-         main_rst_o        => main_rst,        -- Galaga's reset, synchronized
+         main_clk_o        => main_clk,        -- Xevious's 18 MHz main clock
+         main_rst_o        => main_rst,        -- Xevious's reset, synchronized
          
          video_clk_o       => video_clk,       -- video clock 48 MHz
          video_rst_o       => video_rst        -- video reset, synchronized
@@ -453,13 +453,13 @@ begin
             end if;
 
             if dim_video = '1' then
-                video_red   <= "0" & main_video_red   & main_video_red   & main_video_red(2 downto 2);
-                video_green <= "0" & main_video_green & main_video_green & main_video_green(2 downto 2);
-                video_blue  <= "0" & main_video_blue  & main_video_blue  & main_video_blue & main_video_blue(1 downto 1);  
+                video_red   <= "0" & main_video_red   & main_video_red(3 downto 1);
+                video_green <= "0" & main_video_green & main_video_green(3 downto 1);
+                video_blue  <= "0" & main_video_blue  & main_video_blue(3 downto 1);
             else
-                video_red   <= main_video_red   & main_video_red   & main_video_red(2 downto 1);
-                video_green <= main_video_green & main_video_green & main_video_green(2 downto 1);
-                video_blue  <= main_video_blue  & main_video_blue  & main_video_blue & main_video_blue;
+                video_red   <= main_video_red   & main_video_red;
+                video_green <= main_video_green & main_video_green;
+                video_blue  <= main_video_blue  & main_video_blue;
             end if;
 
             video_hs     <= not main_video_hs;
@@ -651,49 +651,52 @@ begin
       qnice_dn_data    <= (others => '0');
 
       case qnice_dev_id_i is
+      
+  -- Xevious
+--roms_cs  <= '1' when dn_addr(16 downto 12) < "10001"   else '0'; rom 1,2,3, sub cpu 1, sub cpu 2, Gfx 1, Gfx 2, Gfx 3
+--romta_cs <= '1' when dn_addr(16 downto 12) = "10001"   else '0'; 4096kb / gfx 4 - 2a rom - xvi_9.2a
+--romtb_cs <= '1' when dn_addr(16 downto 13) = "1001"    else '0'; 8192kb / gfx 4 - 2b rom - xvi_10.2b
+--romtc_cs <= '1' when dn_addr(16 downto 12) = "10100"   else '0'; 4096kb / gfx 4 - 2c rom - xvi_11.2c
+--rom50_cs <= '1' when dn_addr(16 downto 11) = "101010"  else '0'; 2048kb 50xx
+--rom51_cs <= '1' when dn_addr(16 downto 10) = "1010110" else '0'; 1024kb 51xx
+--rom54_cs <= '1' when dn_addr(16 downto 10) = "1010111" else '0'; 1024jb 54xx
 
---rom1_cs  <= '1' when dn_addr(15 downto 14) = "00"     else '0'; -- 16k
---rom2_cs  <= '1' when dn_addr(15 downto 12) = "0100"   else '0'; -- 4k
---rom3_cs  <= '1' when dn_addr(15 downto 12) = "0101"   else '0'; -- 4k
---roms_cs  <= '1' when dn_addr(15 downto 13) = "011"    else '0'; -- 8k
---romb_cs  <= '1' when dn_addr(15 downto 13) = "100"    else '0'; -- 8k
---rom51_cs <= '1' when dn_addr(15 downto 10) = "101000" else '0'; -- 1k
---rom54_cs <= '1' when dn_addr(15 downto 10) = "101001" else '0'; -- 1k
-
-         -- Galaga ROMSs
-         when C_DEV_GAL_CPU_ROM1 =>
+         -- Xevious ROMSs
+         when C_DEV_XEV_CPU_ROM1 =>
               qnice_dn_wr   <= qnice_dev_ce_i and qnice_dev_we_i;
-              qnice_dn_addr <= "00" & qnice_dev_addr_i(13 downto 0);    -- rom1_cs
+              if qnice_dn_addr(16 downto 12) >= "00000" and qnice_dn_addr(16 downto 12) < "10001" then
+                qnice_dn_addr <= qnice_dn_addr(16 downto 12) & qnice_dev_addr_i(11 downto 0); 
+              end if;
               qnice_dn_data <= qnice_dev_data_i(7 downto 0);
 
-         when C_DEV_GAL_CPU_ROM2 =>
+         when C_DEV_XEV_2A_GFX4 =>
               qnice_dn_wr   <= qnice_dev_ce_i and qnice_dev_we_i;
-              qnice_dn_addr <= "0100" & qnice_dev_addr_i(11 downto 0);  -- rom2_cs
+              qnice_dn_addr <= "10001" & qnice_dev_addr_i(11 downto 0);  --romta_cs
               qnice_dn_data <= qnice_dev_data_i(7 downto 0);
 
-         when C_DEV_GAL_CPU_ROM3 =>
+         when C_DEV_XEV_2B_GFX4 =>
               qnice_dn_wr   <= qnice_dev_ce_i and qnice_dev_we_i;
-              qnice_dn_addr <= "0101" & qnice_dev_addr_i(11 downto 0);  -- rom3_cs
+              qnice_dn_addr <= "1001" & qnice_dev_addr_i(12 downto 0);   --romtb_cs
               qnice_dn_data <= qnice_dev_data_i(7 downto 0);
 
-         when C_DEV_GAL_GFX2 =>
+         when C_DEV_XEV_2C_GFX4 =>
               qnice_dn_wr   <= qnice_dev_ce_i and qnice_dev_we_i;
-              qnice_dn_addr <= "011" & qnice_dev_addr_i(12 downto 0);   -- roms_cs
+              qnice_dn_addr <= "10100" & qnice_dev_addr_i(11 downto 0);  --romtc_cs
               qnice_dn_data <= qnice_dev_data_i(7 downto 0);
 
-         when C_DEV_GAL_GFX1 =>
+         when C_DEV_XEV_MCU1 =>
               qnice_dn_wr   <= qnice_dev_ce_i and qnice_dev_we_i;
-              qnice_dn_addr <= "100" & qnice_dev_addr_i(12 downto 0);   -- romb_cs
+              qnice_dn_addr <= "101010" & qnice_dev_addr_i(10 downto 0);  --rom50_cs
               qnice_dn_data <= qnice_dev_data_i(7 downto 0);
 
-         when C_DEV_GAL_MCU1 =>
+         when C_DEV_XEV_MCU2 =>
               qnice_dn_wr   <= qnice_dev_ce_i and qnice_dev_we_i;
-              qnice_dn_addr <= "101000" & qnice_dev_addr_i(9 downto 0); -- rom51_cs
+              qnice_dn_addr <= "1010110" & qnice_dev_addr_i(9 downto 0);  --rom51_cs
               qnice_dn_data <= qnice_dev_data_i(7 downto 0);
 
-         when C_DEV_GAL_MCU2 =>
+         when C_DEV_XEV_MCU3 =>
               qnice_dn_wr   <= qnice_dev_ce_i and qnice_dev_we_i;
-              qnice_dn_addr <= "101001" & qnice_dev_addr_i(9 downto 0); -- rom52_cs
+              qnice_dn_addr <= "1010111" & qnice_dev_addr_i(9 downto 0);  --rom54_cs
               qnice_dn_data <= qnice_dev_data_i(7 downto 0);
 
          when others => null;

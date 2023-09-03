@@ -3,7 +3,7 @@
 --
 -- MEGA65 R3 main file that contains the whole machine
 --
--- Galaga port done by Samuel P ( Muse ) in 2023
+-- Xevious port done by Samuel P ( Muse ) in 2023
 -- MiSTer2MEGA65 done by sy2002 and MJoergen in 2022 and licensed under GPL v3
 ----------------------------------------------------------------------------------
 
