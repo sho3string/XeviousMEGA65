@@ -652,22 +652,50 @@ begin
 
       case qnice_dev_id_i is
       
-  -- Xevious
---roms_cs  <= '1' when dn_addr(16 downto 12) < "10001"   else '0'; rom 1,2,3, sub cpu 1, sub cpu 2, Gfx 1, Gfx 2, Gfx 3
---romta_cs <= '1' when dn_addr(16 downto 12) = "10001"   else '0'; 4096kb / gfx 4 - 2a rom - xvi_9.2a
---romtb_cs <= '1' when dn_addr(16 downto 13) = "1001"    else '0'; 8192kb / gfx 4 - 2b rom - xvi_10.2b
---romtc_cs <= '1' when dn_addr(16 downto 12) = "10100"   else '0'; 4096kb / gfx 4 - 2c rom - xvi_11.2c
---rom50_cs <= '1' when dn_addr(16 downto 11) = "101010"  else '0'; 2048kb 50xx
---rom51_cs <= '1' when dn_addr(16 downto 10) = "1010110" else '0'; 1024kb 51xx
---rom54_cs <= '1' when dn_addr(16 downto 10) = "1010111" else '0'; 1024jb 54xx
+-- roms_cs  <= '1' when dn_addr(16 downto 12) < "10001"   else '0'; 64.5 kb rom 1,2,3, sub cpu 1, sub cpu 2, Gfx 1, Gfx 2, Gfx 3
+--  |_ 000 cpu1_3p-2l
+--    |_ 0010 cpu2_3f-3j
+--      |_ 00110 cpu3_2c
+--        |_ 00111 gfx1_3b
+--          |_ 01000 gfx2_3c-3d
+--            |_ 01010 gfx3_4m-4r
+--romta_cs <= '1' when dn_addr(16 downto 12) = "10001"   else '0'; 4096 bytes / gfx 4 - 2a rom - xvi_9.2a
+--romtb_cs <= '1' when dn_addr(16 downto 13) = "1001"    else '0'; 8192 bytes / gfx 4 - 2b rom - xvi_10.2b
+--romtc_cs <= '1' when dn_addr(16 downto 12) = "10100"   else '0'; 4096 bytes / gfx 4 - 2c rom - xvi_11.2c
+--rom50_cs <= '1' when dn_addr(16 downto 11) = "101010"  else '0'; 2048 bytes 50xx
+--rom51_cs <= '1' when dn_addr(16 downto 10) = "1010110" else '0'; 1024 bytes 51xx
+--rom54_cs <= '1' when dn_addr(16 downto 10) = "1010111" else '0'; 1024 bytes 54xx
 
-         -- Xevious ROMSs
+         -- Xevious ROMS
          when C_DEV_XEV_CPU_ROM1 =>
               qnice_dn_wr   <= qnice_dev_ce_i and qnice_dev_we_i;
-              if qnice_dn_addr(16 downto 12) >= "00000" and qnice_dn_addr(16 downto 12) < "10001" then
-                qnice_dn_addr <= qnice_dn_addr(16 downto 12) & qnice_dev_addr_i(11 downto 0); 
-              end if;
+              qnice_dn_addr <= "000" & qnice_dev_addr_i(13 downto 0); 
               qnice_dn_data <= qnice_dev_data_i(7 downto 0);
+              
+         when C_DEV_XEV_CPU_ROM2 =>
+              qnice_dn_wr   <= qnice_dev_ce_i and qnice_dev_we_i;
+              qnice_dn_addr <= "0010" & qnice_dev_addr_i(12 downto 0); 
+              qnice_dn_data <= qnice_dev_data_i(7 downto 0);
+              
+         when C_DEV_XEV_CPU_ROM3 =>
+              qnice_dn_wr   <= qnice_dev_ce_i and qnice_dev_we_i;
+              qnice_dn_addr <= "00110" & qnice_dev_addr_i(11 downto 0); 
+              qnice_dn_data <= qnice_dev_data_i(7 downto 0);
+              
+         when C_DEV_XEV_GFX1 =>
+              qnice_dn_wr   <= qnice_dev_ce_i and qnice_dev_we_i;
+              qnice_dn_addr <= "00111" & qnice_dev_addr_i(11 downto 0); 
+              qnice_dn_data <= qnice_dev_data_i(7 downto 0);   
+              
+         when C_DEV_XEV_GFX2 =>
+              qnice_dn_wr   <= qnice_dev_ce_i and qnice_dev_we_i;
+              qnice_dn_addr <= "01000" & qnice_dev_addr_i(11 downto 0); 
+              qnice_dn_data <= qnice_dev_data_i(7 downto 0);  
+              
+         when C_DEV_XEV_GFX3 =>
+              qnice_dn_wr   <= qnice_dev_ce_i and qnice_dev_we_i;
+              qnice_dn_addr <= "01010" & qnice_dev_addr_i(11 downto 0); 
+              qnice_dn_data <= qnice_dev_data_i(7 downto 0);                
 
          when C_DEV_XEV_2A_GFX4 =>
               qnice_dn_wr   <= qnice_dev_ce_i and qnice_dev_we_i;

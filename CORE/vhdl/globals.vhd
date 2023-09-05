@@ -143,33 +143,54 @@ constant C_CRTROMS_MAN           : crtrom_buf_array := ( x"EEEE", x"EEEE",
 --               b) Don't forget to zero-terminate each of your substrings of C_CRTROMS_AUTO_NAMES by adding "& ENDSTR;"
 --               c) Don't forget to finish the C_CRTROMS_AUTO array with x"EEEE"
 
-constant C_DEV_XEV_CPU_ROM1           : std_logic_vector(15 downto 0) := x"0100";  -- XEVIOUS CPU1,2,3 - Gfx 1,2,3
-constant C_DEV_XEV_2A_GFX4            : std_logic_vector(15 downto 0) := x"0101";  -- XEVIOUS GFX 4 2A
-constant C_DEV_XEV_2B_GFX4            : std_logic_vector(15 downto 0) := x"0102";  -- XEVIOUS GFX 4 2B
-constant C_DEV_XEV_2C_GFX4            : std_logic_vector(15 downto 0) := x"0103";  -- XEVIOUS GFX 4 2C
-constant C_DEV_XEV_MCU1               : std_logic_vector(15 downto 0) := x"0104";  -- XEVIOUS MCU 1
-constant C_DEV_XEV_MCU2               : std_logic_vector(15 downto 0) := x"0105";  -- XEVIOUS MCU 2
-constant C_DEV_XEV_MCU3               : std_logic_vector(15 downto 0) := x"0106";  -- XEVIOUS MCU 3
+constant C_DEV_XEV_CPU_ROM1           : std_logic_vector(15 downto 0) := x"0100";  -- XEVIOUS CPU1,      
+constant C_DEV_XEV_CPU_ROM2           : std_logic_vector(15 downto 0) := x"0101";  -- XEVIOUS CPU2 
+constant C_DEV_XEV_CPU_ROM3           : std_logic_vector(15 downto 0) := x"0102";  -- XEVIOUS CPU3 
+constant C_DEV_XEV_GFX1               : std_logic_vector(15 downto 0) := x"0103";  -- XEVIOUS GFX1
+constant C_DEV_XEV_GFX2               : std_logic_vector(15 downto 0) := x"0104";  -- XEVIOUS GFX2
+constant C_DEV_XEV_GFX3               : std_logic_vector(15 downto 0) := x"0105";  -- XEVIOUS GFX3
+constant C_DEV_XEV_2A_GFX4            : std_logic_vector(15 downto 0) := x"0106";  -- XEVIOUS GFX 4 2A
+constant C_DEV_XEV_2B_GFX4            : std_logic_vector(15 downto 0) := x"0107";  -- XEVIOUS GFX 4 2B
+constant C_DEV_XEV_2C_GFX4            : std_logic_vector(15 downto 0) := x"0108";  -- XEVIOUS GFX 4 2C
+constant C_DEV_XEV_MCU1               : std_logic_vector(15 downto 0) := x"0109";  -- XEVIOUS MCU 1
+constant C_DEV_XEV_MCU2               : std_logic_vector(15 downto 0) := x"010A";  -- XEVIOUS MCU 2
+constant C_DEV_XEV_MCU3               : std_logic_vector(15 downto 0) := x"010B";  -- XEVIOUS MCU 3
 
---roms_cs  <= '1' when dn_addr(16 downto 12) < "10001"   else '0'; rom 1,2,3, sub cpu 1, sub cpu 2, Gfx 1, Gfx 2, Gfx 3
---romta_cs <= '1' when dn_addr(16 downto 12) = "10001"   else '0'; 4096kb / gfx 4 - 2a rom - xvi_9.2a
---romtb_cs <= '1' when dn_addr(16 downto 13) = "1001"    else '0'; 8192kb / gfx 4 - 2b rom - xvi_10.2b
---romtc_cs <= '1' when dn_addr(16 downto 12) = "10100"   else '0'; 4096kb / gfx 4 - 2c rom - xvi_11.2c
---rom50_cs <= '1' when dn_addr(16 downto 11) = "101010"  else '0'; 2048kb 50xx
---rom51_cs <= '1' when dn_addr(16 downto 10) = "1010110" else '0'; 1024kb 51xx
---rom54_cs <= '1' when dn_addr(16 downto 10) = "1010111" else '0'; 1024jb 54xx
+-- roms_cs  <= '1' when dn_addr(16 downto 12) < "10001"   else '0'; 64.5 kb rom 1,2,3, sub cpu 1, sub cpu 2, Gfx 1, Gfx 2, Gfx 3
+--  |_ 000 cpu1_3p-2l
+--    |_ 0010 cpu2_3f-3j
+--      |_ 00110 cpu3_2c
+--        |_ 00111 gfx1_3b
+--          |_ 01000 gfx2_3c-3d
+--            |_ 01010 gfx3_4m-4r
+--romta_cs <= '1' when dn_addr(16 downto 12) = "10001"   else '0'; 4096 bytes / gfx 4 - 2a rom - xvi_9.2a
+--romtb_cs <= '1' when dn_addr(16 downto 13) = "1001"    else '0'; 8192 bytes / gfx 4 - 2b rom - xvi_10.2b
+--romtc_cs <= '1' when dn_addr(16 downto 12) = "10100"   else '0'; 4096 bytes / gfx 4 - 2c rom - xvi_11.2c
+--rom50_cs <= '1' when dn_addr(16 downto 11) = "101010"  else '0'; 2048 bytes 50xx
+--rom51_cs <= '1' when dn_addr(16 downto 10) = "1010110" else '0'; 1024 bytes 51xx
+--rom54_cs <= '1' when dn_addr(16 downto 10) = "1010111" else '0'; 1024 bytes 54xx
 
 -- XEVIOUS core specific ROMs
-constant ROM1_MAIN_CPU_ROM            : string  := "arcade/xevious/rom1.rom"  & ENDSTR; -- rom 1,2,3, sub cpu 1, sub cpu 2, Gfx 1, Gfx 2, Gfx 3
-constant GFX4_2A_ROM                  : string  := "arcade/xevious/xvi_9.2a"  & ENDSTR; -- 4096kb / gfx 4 - 2a rom - xvi_9.2a
-constant GFX4_2B_ROM                  : string  := "arcade/xevious/xvi_10.2b" & ENDSTR; -- 8192kb / gfx 4 - 2b rom - xvi_10.2b
-constant GFX4_2C_ROM                  : string  := "arcade/xevious/xvi_11.2c" & ENDSTR; -- 4096kb / gfx 4 - 2c rom - xvi_11.2c
-constant NAMCO50XX_MCU_ROM            : string  := "arcade/xevious/50xx.bin"  & ENDSTR; -- 2048kb 50xx
-constant NAMCO51XX_MCU_ROM            : string  := "arcade/xevious/51xx.bin"  & ENDSTR; -- 1024kb 51xx
-constant NAMCO54XX_MCU_ROM            : string  := "arcade/xevious/54xx.bin"  & ENDSTR; -- 1024jb 54xx
+constant ROM1_MAIN_CPU_ROM            : string  := "arcade/xevious/rom1.rom"  & ENDSTR; -- 16384b rom i
+constant ROM2_MAIN_CPU_ROM            : string  := "arcade/xevious/rom2.rom"  & ENDSTR; -- 8192b  rom ii
+constant ROM3_MAIN_CPU_ROM            : string  := "arcade/xevious/xvi_7.2c"  & ENDSTR; -- 4096b  rom iii
+constant GFX1_3B_ROM                  : string  := "arcade/xevious/xvi_12.3b" & ENDSTR; -- 4096b  Foreground tiles
+constant GFX2_3C_3D_ROM               : string  := "arcade/xevious/gfx2.rom"  & ENDSTR; -- 8192b  Background pattern B0/B1
+constant GFX3_4M_4P_4N_4R_ROM         : string  := "arcade/xevious/gfx3.rom"  & ENDSTR; -- 28672b Sprites
+constant GFX4_2A_ROM                  : string  := "arcade/xevious/xvi_9.2a"  & ENDSTR; -- 4096b / Background tilemaps 4 - 2a rom - xvi_9.2a
+constant GFX4_2B_ROM                  : string  := "arcade/xevious/xvi_10.2b" & ENDSTR; -- 8192b / Background tilemaps 4 - 2b rom - xvi_10.2b
+constant GFX4_2C_ROM                  : string  := "arcade/xevious/xvi_11.2c" & ENDSTR; -- 4096b / Background tilemaps 4 - 2c rom - xvi_11.2c
+constant NAMCO50XX_MCU_ROM            : string  := "arcade/xevious/50xx.bin"  & ENDSTR; -- 2048b 50xx
+constant NAMCO51XX_MCU_ROM            : string  := "arcade/xevious/51xx.bin"  & ENDSTR; -- 1024b 51xx
+constant NAMCO54XX_MCU_ROM            : string  := "arcade/xevious/54xx.bin"  & ENDSTR; -- 1024b 54xx
 
 constant CPU_ROM1_MAIN_START          : std_logic_vector(15 downto 0) := X"0000";
-constant GFX4_2A_ROM_MAIN_START       : std_logic_vector(15 downto 0) := CPU_ROM1_MAIN_START + ROM1_MAIN_CPU_ROM'length;
+constant CPU_ROM2_MAIN_START          : std_logic_vector(15 downto 0) := CPU_ROM1_MAIN_START + ROM1_MAIN_CPU_ROM'length;
+constant CPU_ROM3_MAIN_START          : std_logic_vector(15 downto 0) := CPU_ROM2_MAIN_START + ROM2_MAIN_CPU_ROM'length;
+constant GFX1_ROM_MAIN_START          : std_logic_vector(15 downto 0) := CPU_ROM3_MAIN_START + ROM3_MAIN_CPU_ROM'length;
+constant GFX2_ROM_MAIN_START          : std_logic_vector(15 downto 0) := GFX1_ROM_MAIN_START + GFX1_3B_ROM'length;
+constant GFX3_ROM_MAIN_START          : std_logic_vector(15 downto 0) := GFX2_ROM_MAIN_START + GFX2_3C_3D_ROM'length;
+constant GFX4_2A_ROM_MAIN_START       : std_logic_vector(15 downto 0) := GFX3_ROM_MAIN_START + GFX3_4M_4P_4N_4R_ROM'length;
 constant GFX4_2B_ROM_MAIN_START       : std_logic_vector(15 downto 0) := GFX4_2A_ROM_MAIN_START + GFX4_2A_ROM'length;
 constant GFX4_2C_ROM_MAIN_START       : std_logic_vector(15 downto 0) := GFX4_2B_ROM_MAIN_START + GFX4_2B_ROM'length;
 constant MCU1_MAIN_START              : std_logic_vector(15 downto 0) := GFX4_2C_ROM_MAIN_START + GFX4_2C_ROM'length;
@@ -177,20 +198,26 @@ constant MCU2_MAIN_START              : std_logic_vector(15 downto 0) := MCU1_MA
 constant MCU3_MAIN_START              : std_logic_vector(15 downto 0) := MCU2_MAIN_START + NAMCO51XX_MCU_ROM'length;
 
 -- M2M framework constants
-constant C_CRTROMS_AUTO_NUM      : natural := 7;                                       -- Amount of automatically loadable ROMs and carts, if more tha    n 3: also adjust CRTROM_MAN_MAX in M2M/rom/shell_vars.asm, Needs to be in sync with config.vhd. Maximum is 16
-constant C_CRTROMS_AUTO_NAMES    : string  := ROM1_MAIN_CPU_ROM & 
+constant C_CRTROMS_AUTO_NUM      : natural := 12;                                       -- Amount of automatically loadable ROMs and carts, if more tha    n 3: also adjust CRTROM_MAN_MAX in M2M/rom/shell_vars.asm, Needs to be in sync with config.vhd. Maximum is 16
+constant C_CRTROMS_AUTO_NAMES    : string  := ROM1_MAIN_CPU_ROM & ROM2_MAIN_CPU_ROM & ROM3_MAIN_CPU_ROM &
+                                              GFX1_3B_ROM & GFX2_3C_3D_ROM & GFX3_4M_4P_4N_4R_ROM &
                                               GFX4_2A_ROM & GFX4_2B_ROM & GFX4_2C_ROM &
                                               NAMCO50XX_MCU_ROM & NAMCO51XX_MCU_ROM & NAMCO54XX_MCU_ROM &
                                               ENDSTR;
                                               
 constant C_CRTROMS_AUTO          : crtrom_buf_array := ( 
-      C_CRTROMTYPE_DEVICE, C_DEV_XEV_CPU_ROM1,C_CRTROMTYPE_MANDATORY, CPU_ROM1_MAIN_START,
-      C_CRTROMTYPE_DEVICE, C_DEV_XEV_2A_GFX4, C_CRTROMTYPE_MANDATORY, GFX4_2A_ROM_MAIN_START,
-      C_CRTROMTYPE_DEVICE, C_DEV_XEV_2B_GFX4, C_CRTROMTYPE_MANDATORY, GFX4_2B_ROM_MAIN_START,
-      C_CRTROMTYPE_DEVICE, C_DEV_XEV_2C_GFX4, C_CRTROMTYPE_MANDATORY, GFX4_2C_ROM_MAIN_START,
-      C_CRTROMTYPE_DEVICE, C_DEV_XEV_MCU1,     C_CRTROMTYPE_MANDATORY, MCU1_MAIN_START,
-      C_CRTROMTYPE_DEVICE, C_DEV_XEV_MCU2,     C_CRTROMTYPE_MANDATORY, MCU2_MAIN_START,
-      C_CRTROMTYPE_DEVICE, C_DEV_XEV_MCU3,     C_CRTROMTYPE_MANDATORY, MCU3_MAIN_START,
+      C_CRTROMTYPE_DEVICE, C_DEV_XEV_CPU_ROM1,C_CRTROMTYPE_MANDATORY,CPU_ROM1_MAIN_START,
+      C_CRTROMTYPE_DEVICE, C_DEV_XEV_CPU_ROM2,C_CRTROMTYPE_MANDATORY,CPU_ROM2_MAIN_START,
+      C_CRTROMTYPE_DEVICE, C_DEV_XEV_CPU_ROM3,C_CRTROMTYPE_MANDATORY,CPU_ROM3_MAIN_START,
+      C_CRTROMTYPE_DEVICE, C_DEV_XEV_GFX1,C_CRTROMTYPE_MANDATORY,GFX1_ROM_MAIN_START,
+      C_CRTROMTYPE_DEVICE, C_DEV_XEV_GFX2,C_CRTROMTYPE_MANDATORY,GFX2_ROM_MAIN_START,
+      C_CRTROMTYPE_DEVICE, C_DEV_XEV_GFX3,C_CRTROMTYPE_MANDATORY,GFX3_ROM_MAIN_START,
+      C_CRTROMTYPE_DEVICE, C_DEV_XEV_2A_GFX4,C_CRTROMTYPE_MANDATORY,GFX4_2A_ROM_MAIN_START,
+      C_CRTROMTYPE_DEVICE, C_DEV_XEV_2B_GFX4,C_CRTROMTYPE_MANDATORY,GFX4_2B_ROM_MAIN_START,
+      C_CRTROMTYPE_DEVICE, C_DEV_XEV_2C_GFX4,C_CRTROMTYPE_MANDATORY,GFX4_2C_ROM_MAIN_START,
+      C_CRTROMTYPE_DEVICE, C_DEV_XEV_MCU1,C_CRTROMTYPE_MANDATORY,MCU1_MAIN_START,
+      C_CRTROMTYPE_DEVICE, C_DEV_XEV_MCU2,C_CRTROMTYPE_MANDATORY,MCU2_MAIN_START,
+      C_CRTROMTYPE_DEVICE, C_DEV_XEV_MCU3,C_CRTROMTYPE_MANDATORY,MCU3_MAIN_START,
                                                          x"EEEE");                     -- Always finish the array using x"EEEE"
 
 ----------------------------------------------------------------------------------------------------------

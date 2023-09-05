@@ -372,7 +372,7 @@ constant OPTM_ITEMS        : string :=
    " DSW A & B\n"           &
    "\n"                     &
    " 0 - Auto fire\n"       &
-   " 1 - Unusede\n"         &
+   " 1 - Unused\n"          &
    " 2 - Coin B - A\n"      &
    " 3 - Coin B - B\n"      &
    " 4 - Unused\n"          &
