@@ -657,8 +657,10 @@ begin
 --    |_ 0010 cpu2_3f-3j
 --      |_ 00110 cpu3_2c
 --        |_ 00111 gfx1_3b
---          |_ 01000 gfx2_3c-3d
---            |_ 01010 gfx3_4m-4r
+--          |_ 01000 gfx2_3c
+--            |_ 01001 gfx2_3d
+--              |_ 01010 gfx3_4m-4p
+--                |_ 01111 gfx3_4n-4r
 --romta_cs <= '1' when dn_addr(16 downto 12) = "10001"   else '0'; 4096 bytes / gfx 4 - 2a rom - xvi_9.2a
 --romtb_cs <= '1' when dn_addr(16 downto 13) = "1001"    else '0'; 8192 bytes / gfx 4 - 2b rom - xvi_10.2b
 --romtc_cs <= '1' when dn_addr(16 downto 12) = "10100"   else '0'; 4096 bytes / gfx 4 - 2c rom - xvi_11.2c
@@ -681,20 +683,35 @@ begin
               qnice_dn_wr   <= qnice_dev_ce_i and qnice_dev_we_i;
               qnice_dn_addr <= "00110" & qnice_dev_addr_i(11 downto 0); 
               qnice_dn_data <= qnice_dev_data_i(7 downto 0);
-              
+         
+         -- foreground gfx1     
          when C_DEV_XEV_GFX1 =>
               qnice_dn_wr   <= qnice_dev_ce_i and qnice_dev_we_i;
               qnice_dn_addr <= "00111" & qnice_dev_addr_i(11 downto 0); 
               qnice_dn_data <= qnice_dev_data_i(7 downto 0);   
               
-         when C_DEV_XEV_GFX2 =>
+         -- background gfx2
+         when C_DEV_XEV_GFX2_1 =>
               qnice_dn_wr   <= qnice_dev_ce_i and qnice_dev_we_i;
               qnice_dn_addr <= "01000" & qnice_dev_addr_i(11 downto 0); 
               qnice_dn_data <= qnice_dev_data_i(7 downto 0);  
               
-         when C_DEV_XEV_GFX3 =>
+         -- background gfx2
+         when C_DEV_XEV_GFX2_2 =>
+              qnice_dn_wr   <= qnice_dev_ce_i and qnice_dev_we_i;
+              qnice_dn_addr <= "01001" & qnice_dev_addr_i(11 downto 0); 
+              qnice_dn_data <= qnice_dev_data_i(7 downto 0);  
+              
+         -- sprite gfx3
+         when C_DEV_XEV_GFX3_1 =>
               qnice_dn_wr   <= qnice_dev_ce_i and qnice_dev_we_i;
               qnice_dn_addr <= "01010" & qnice_dev_addr_i(11 downto 0); 
+              qnice_dn_data <= qnice_dev_data_i(7 downto 0);      
+              
+         -- sprite gfx3
+         when C_DEV_XEV_GFX3_2 =>
+              qnice_dn_wr   <= qnice_dev_ce_i and qnice_dev_we_i;
+              qnice_dn_addr <= "01111" & qnice_dev_addr_i(11 downto 0); 
               qnice_dn_data <= qnice_dev_data_i(7 downto 0);                
 
          when C_DEV_XEV_2A_GFX4 =>
@@ -726,6 +743,7 @@ begin
               qnice_dn_wr   <= qnice_dev_ce_i and qnice_dev_we_i;
               qnice_dn_addr <= "1010111" & qnice_dev_addr_i(9 downto 0);  --rom54_cs
               qnice_dn_data <= qnice_dev_data_i(7 downto 0);
+             
 
          when others => null;
       end case;
