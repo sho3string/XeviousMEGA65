@@ -74,6 +74,7 @@ entity main is
       dn_data_i               : in  std_logic_vector(7 downto 0);
       dn_wr_i                 : in  std_logic;
 
+      sp_grphx_addr           : out std_logic_vector(14 downto 0);
       
       osm_control_i      : in  std_logic_vector(255 downto 0)
       
@@ -129,13 +130,28 @@ constant m65_up_crsr       : integer := 73; --Player up
 constant m65_vert_crsr     : integer := 7;  --Player down
 constant m65_left_crsr     : integer := 74; --Player left
 constant m65_horz_crsr     : integer := 2;  --Player right
-constant m65_space         : integer := 60; --Fire
+constant m65_left_shift    : integer := 15; --Fire
+constant m65_right_shift   : integer := 52; --Fire 2
+constant m65_space         : integer := 60; --Bomb
+
 
 -- Pause, credit button & test mode
 constant m65_p             : integer := 41; --Pause button
 constant m65_s             : integer := 13; --Service 1
 constant m65_capslock      : integer := 72; --Service Mode
 constant m65_help          : integer := 67; --Help key
+
+
+
+signal ps2_key : std_logic_vector(10 downto 0 );
+signal pressed : std_logic;
+signal old_state : std_logic;
+signal key_start1, key_start2 : std_logic;
+signal key_coin1, key_coin2, key_coin3, key_coin4 : std_logic;
+signal key_reset, key_service : std_logic;
+
+signal key_p1_up, key_p1_left, key_p1_down, key_p1_right, key_p1_fire, key_p1_bomb : std_logic;
+signal key_p2_up, key_p2_left, key_p2_down, key_p2_right, key_p2_fire, key_p2_bomb : std_logic;
 
 begin
    
@@ -160,6 +176,59 @@ begin
   
         end if;
     end process;
+    
+    pressed <= ps2_key(9);
+    process (clk_main_i)
+        begin
+        if rising_edge(clk_main_i) then
+            old_state <= ps2_key(10);
+            if old_state /= ps2_key(10) then
+                case ps2_key(8 downto 0) is
+                    when x"16" =>
+                        key_start1  <= pressed; -- 1
+                    when x"1E" =>
+                        key_start2  <= pressed; -- 2
+                    when x"2E" =>
+                        key_coin1   <= pressed; -- 5
+                    when x"36" =>
+                        key_coin2   <= pressed; -- 6
+                    when x"04" =>
+                        key_reset   <= pressed; -- F3
+                    when x"46" =>
+                        key_service <= pressed; -- 9
+                        
+                    when x"75" => 
+                        key_p1_up   <= pressed; -- up
+			        when x"6b" =>
+			            key_p1_left <= pressed; -- left
+			        when x"72" =>
+			            key_p1_down <= pressed; -- down
+			        when x"74" =>
+			            key_p1_right<= pressed; -- right
+			        when x"014"=>
+			            key_p1_fire <= pressed; -- lctrl    
+			        when x"011"=>
+			            key_p1_bomb <= pressed; -- lalt
+			            
+			        when x"02d" =>
+			            key_p2_up   <= pressed; -- r
+			        when x"023" => 
+			            key_p2_left <= pressed; -- d
+			        when x"02b" =>
+			             key_p2_down <= pressed; -- f
+			        when x"034" =>
+			             key_p2_right<= pressed; -- g
+			        when x"01c" =>
+			             key_p2_fire <= pressed; -- a
+			        when x"01b" =>
+			             key_p2_bomb <= pressed; -- s  
+                    when others =>
+                        null; -- Do nothing for other cases
+                end case;
+            end if;
+        end if;
+    end process;
+
 
     i_xevious : entity work.xevious
     port map (
@@ -189,18 +258,19 @@ begin
     down1      => not joy_1_down_n_i or not keyboard_n(m65_vert_crsr),
     left1      => not joy_1_left_n_i or not keyboard_n(m65_left_crsr),
     right1     => not joy_1_right_n_i or not keyboard_n(m65_horz_crsr),
-    fire1      => not joy_1_fire_n_i or not keyboard_n(m65_space),
+    fire1      => not joy_1_fire_n_i or not keyboard_n(m65_right_shift),
+    fire2      => not joy_2_fire_n_i or not keyboard_n(m65_space),
     -- player 2 joystick is only active in cocktail/table mode.
     up2        => not joy_2_up_n_i,
     down2      => not joy_2_down_n_i,
     left2      => not joy_2_left_n_i,
     right2     => not joy_2_right_n_i,
-    fire2      => not joy_2_fire_n_i,
     flip       => flip_screen,
     
     -- dip a and b are labelled back to front in MiSTer core, hence this workaround.
     dip_switch_a    => not dsw_b_i,
-    dip_switch_b    => not dsw_a_i,
+    dip_switch_b    => not (dsw_a_i(7 downto 5) & (not keyboard_n(m65_space)) & dsw_a_i(3 downto 1) & (not keyboard_n(m65_space))),
+    
     h_offset   => status(27 downto 24),
     v_offset   => status(31 downto 28),
     pause      => pause_cpu or pause_i,

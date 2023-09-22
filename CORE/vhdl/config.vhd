@@ -371,15 +371,6 @@ constant OPTM_ITEMS        : string :=
    " Atari dip switches\n"  &
    " DSW A & B\n"           &
    "\n"                     &
-   " 0 - Auto fire\n"       &
-   " 1 - Unused\n"          &
-   " 2 - Coin B - A\n"      &
-   " 3 - Coin B - B\n"      &
-   " 4 - Unused\n"          &
-   " 5 - Difficulty A\n"    &
-   " 6 - Difficulty B\n"    &
-   " 7 - Unused\n"          &
-   "\n"                     &
    " 0 - Coinage A\n"       &
    " 1 - Coinage B\n"       &
    " 2 - Bonus Life A\n"    &
@@ -389,18 +380,18 @@ constant OPTM_ITEMS        : string :=
    " 6 - Lives B\n"         &
    " 7 - Coin counters\n"   &
    "\n"                     &
-   " Back to main menu\n"   &
-   " Namco  dip switches\n" &
-   " DSW A & B\n"           &
-   "\n"                     &
-   " 0 - Unused\n"          &
-   " 1 - FA Bonus Life\n"   &
+   " 0 - Auto fire\n"       &
+   " 1 - Unused\n"          &
    " 2 - Coin B - A\n"      &
    " 3 - Coin B - B\n"      &
    " 4 - Unused\n"          &
    " 5 - Difficulty A\n"    &
    " 6 - Difficulty B\n"    &
-   " 7 - Freeze\n"          &
+   " 7 - Unused\n"          &
+   "\n"                     &
+   " Back to main menu\n"   &
+   " Namco  dip switches\n" &
+   " DSW A & B\n"           &
    "\n"                     &
    " 0 - Coinage A\n"       &
    " 1 - Coinage B\n"       &
@@ -410,6 +401,15 @@ constant OPTM_ITEMS        : string :=
    " 5 - Lives A\n"         &
    " 6 - Lives B\n"         &
    " 7 - Cabinet\n"         &
+   "\n"                     &
+   " 0 - Unused\n"          &
+   " 1 - FA Bonus Life\n"   &
+   " 2 - Coin B - A\n"      &
+   " 3 - Coin B - B\n"      &
+   " 4 - Unused\n"          &
+   " 5 - Difficulty A\n"    &
+   " 6 - Difficulty B\n"    &
+   " 7 - Freeze\n"          &
    "\n"                     &
    " Back to main menu\n"   &
    "\n"                     &
@@ -498,14 +498,14 @@ constant OPTM_GROUPS       : OPTM_GTYPE := ( OPTM_G_TEXT + OPTM_G_HEADLINE,     
                                              OPTM_G_SUBMENU,
                                              OPTM_G_HEADLINE,
                                              OPTM_G_LINE,
-                                             OPTM_G_VGA_MODES     + OPTM_G_STDSEL,
+                                             OPTM_G_VGA_MODES + OPTM_G_STDSEL,
                                              OPTM_G_LINE,
                                              OPTM_G_TEXT,
                                              OPTM_G_LINE,
                                              OPTM_G_VGA_MODES,
                                              OPTM_G_VGA_MODES,
                                              OPTM_G_LINE,
-                                             OPTM_G_CLOSE         + OPTM_G_SUBMENU,
+                                             OPTM_G_CLOSE + OPTM_G_SUBMENU,
                                              OPTM_G_LINE,                                               -- Line
                                              OPTM_G_TEXT + OPTM_G_HEADLINE,                             -- Headline "Game Setup"
                                              OPTM_G_LINE,                                               -- Line
@@ -516,9 +516,9 @@ constant OPTM_GROUPS       : OPTM_GTYPE := ( OPTM_G_TEXT + OPTM_G_HEADLINE,     
                                              OPTM_G_TEXT + OPTM_G_HEADLINE,                             -- Dipswitch B Title
                                              OPTM_G_LINE,                                               -- Line
                                              OPTM_G_MIDWAY_DSWB0  + OPTM_G_SINGLESEL,                   -- 2 Credits Game
-                                             OPTM_G_MIDWAY_DSWB1  + OPTM_G_SINGLESEL + OPTM_G_STDSEL,   -- Difficulty A \
-                                             OPTM_G_MIDWAY_DSWB2  + OPTM_G_SINGLESEL + OPTM_G_STDSEL,   -- Difficulty B / 
-                                             OPTM_G_MIDWAY_DSWB3  + OPTM_G_SINGLESEL + OPTM_G_STDSEL,   -- Demo Sounds
+                                             OPTM_G_MIDWAY_DSWB1  + OPTM_G_SINGLESEL,                   -- Difficulty A \
+                                             OPTM_G_MIDWAY_DSWB2  + OPTM_G_SINGLESEL,                   -- Difficulty B / 
+                                             OPTM_G_MIDWAY_DSWB3  + OPTM_G_SINGLESEL,                   -- Demo Sounds
                                              OPTM_G_MIDWAY_DSWB4  + OPTM_G_SINGLESEL,                   -- Freeze
                                              OPTM_G_MIDWAY_DSWB5  + OPTM_G_SINGLESEL,                   -- Rack Test
                                              OPTM_G_MIDWAY_DSWB6  + OPTM_G_SINGLESEL,                   -- Unused
@@ -528,19 +528,19 @@ constant OPTM_GROUPS       : OPTM_GTYPE := ( OPTM_G_TEXT + OPTM_G_HEADLINE,     
                                              OPTM_G_MIDWAY_DSWA1  + OPTM_G_SINGLESEL,                   -- Coinage B  |
                                              OPTM_G_MIDWAY_DSWA2  + OPTM_G_SINGLESEL,                   -- Coinage C / 
                                              OPTM_G_MIDWAY_DSWA3  + OPTM_G_SINGLESEL,                   -- Bonus Life A \
-                                             OPTM_G_MIDWAY_DSWA4  + OPTM_G_SINGLESEL + OPTM_G_STDSEL,   -- Bonus Life B  |
-                                             OPTM_G_MIDWAY_DSWA5  + OPTM_G_SINGLESEL + OPTM_G_STDSEL,   -- Bonus Life C /
-                                             OPTM_G_MIDWAY_DSWA6  + OPTM_G_SINGLESEL + OPTM_G_STDSEL,   -- Lives A \
+                                             OPTM_G_MIDWAY_DSWA4  + OPTM_G_SINGLESEL,                   -- Bonus Life B  |
+                                             OPTM_G_MIDWAY_DSWA5  + OPTM_G_SINGLESEL,                   -- Bonus Life C /
+                                             OPTM_G_MIDWAY_DSWA6  + OPTM_G_SINGLESEL,                   -- Lives A \
                                              OPTM_G_MIDWAY_DSWA7  + OPTM_G_SINGLESEL,                   -- Lives B /
                                              OPTM_G_LINE,                                               -- Line
                                              OPTM_G_CLOSE + OPTM_G_SUBMENU,                             -- Close submenu / back to main menu
                                              OPTM_G_SUBMENU,                                            -- Dipswitch B Submenu start
                                              OPTM_G_TEXT + OPTM_G_HEADLINE,                             -- Dipswitch B Title
                                              OPTM_G_LINE,                                               -- Line
-                                             OPTM_G_NAMCO_DSWB0  + OPTM_G_SINGLESEL + OPTM_G_STDSEL,    -- Difficulty A \
-                                             OPTM_G_NAMCO_DSWB1  + OPTM_G_SINGLESEL + OPTM_G_STDSEL,    -- Difficulty B / 
+                                             OPTM_G_NAMCO_DSWB0  + OPTM_G_SINGLESEL,                    -- Difficulty A \
+                                             OPTM_G_NAMCO_DSWB1  + OPTM_G_SINGLESEL,                    -- Difficulty B / 
                                              OPTM_G_NAMCO_DSWB2  + OPTM_G_SINGLESEL,                    -- Unused
-                                             OPTM_G_NAMCO_DSWB3  + OPTM_G_SINGLESEL + OPTM_G_STDSEL,    -- Demo Sounds
+                                             OPTM_G_NAMCO_DSWB3  + OPTM_G_SINGLESEL,                       -- Demo Sounds
                                              OPTM_G_NAMCO_DSWB4  + OPTM_G_SINGLESEL,                    -- Freeze
                                              OPTM_G_NAMCO_DSWB5  + OPTM_G_SINGLESEL,                    -- Rack Test
                                              OPTM_G_NAMCO_DSWB6  + OPTM_G_SINGLESEL,                    -- Unused
@@ -550,9 +550,9 @@ constant OPTM_GROUPS       : OPTM_GTYPE := ( OPTM_G_TEXT + OPTM_G_HEADLINE,     
                                              OPTM_G_NAMCO_DSWA1  + OPTM_G_SINGLESEL,                    -- Coinage B  |
                                              OPTM_G_NAMCO_DSWA2  + OPTM_G_SINGLESEL,                    -- Coinage C / 
                                              OPTM_G_NAMCO_DSWA3  + OPTM_G_SINGLESEL,                    -- Bonus Life A \
-                                             OPTM_G_NAMCO_DSWA4  + OPTM_G_SINGLESEL + OPTM_G_STDSEL,    -- Bonus Life B  |
-                                             OPTM_G_NAMCO_DSWA5  + OPTM_G_SINGLESEL + OPTM_G_STDSEL,    -- Bonus Life C /
-                                             OPTM_G_NAMCO_DSWA6  + OPTM_G_SINGLESEL + OPTM_G_STDSEL,    -- Lives A \
+                                             OPTM_G_NAMCO_DSWA4  + OPTM_G_SINGLESEL,                    -- Bonus Life B  |
+                                             OPTM_G_NAMCO_DSWA5  + OPTM_G_SINGLESEL,                    -- Bonus Life C /
+                                             OPTM_G_NAMCO_DSWA6  + OPTM_G_SINGLESEL,                    -- Lives A \
                                              OPTM_G_NAMCO_DSWA7  + OPTM_G_SINGLESEL,                    -- Lives B /
                                              OPTM_G_LINE,                                               -- Line
                                              OPTM_G_CLOSE + OPTM_G_SUBMENU,                             -- Close submenu / back to main menu
