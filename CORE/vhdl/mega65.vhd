@@ -69,6 +69,8 @@ port (
    qnice_dev_ce_i          : in  std_logic;
    qnice_dev_we_i          : in  std_logic;
    qnice_dev_wait_o        : out std_logic;
+   
+   
 
    --------------------------------------------------------------------------------------------------------
    -- Core Clock Domain
@@ -653,7 +655,7 @@ begin
 
       case qnice_dev_id_i is
       
--- roms_cs <= '1' when dn_addr(16 downto 12) < "10001"   else '0'; 64.5 kb rom 1,2,3, sub cpu 1, sub cpu 2, Gfx 1, Gfx 2, Gfx 3
+--roms_cs <= '1' when dn_addr(16 downto 12) < "10001"   else '0'; 64.5 kb rom 1,2,3, sub cpu 1, sub cpu 2, Gfx 1, Gfx 2, Gfx 3
 --romta_cs <= '1' when dn_addr(16 downto 12) = "10001"   else '0'; 4096 bytes / gfx 4 - 2a rom - xvi_9.2a
 --romtb_cs <= '1' when dn_addr(16 downto 13) = "1001"    else '0'; 8192 bytes / gfx 4 - 2b rom - xvi_10.2b
 --romtc_cs <= '1' when dn_addr(16 downto 12) = "10100"   else '0'; 4096 bytes / gfx 4 - 2c rom - xvi_11.2c
@@ -717,12 +719,17 @@ begin
               qnice_dn_addr <= "01110" & qnice_dev_addr_i(11 downto 0);   --roms_cs
               qnice_dn_data <= qnice_dev_data_i(7 downto 0);   
        
-         -- sprite gfx3, sprite set 1 & set 2 - plane 2
+         -- sprite gfx3, sprite set 1 & set 2 - plane 2 - first 4k
          when C_DEV_XEV_GFX3_4 =>
               qnice_dn_wr   <= qnice_dev_ce_i and qnice_dev_we_i;
-              qnice_dn_addr <= "1000" & qnice_dev_addr_i(12 downto 0);    --roms_cs
+              qnice_dn_addr <= "01111" & qnice_dev_addr_i(11 downto 0);    --roms_cs
               qnice_dn_data <= qnice_dev_data_i(7 downto 0); 
-         -- sprite gfx3, sprite set 1 & set 2 - plane 2
+         
+         -- sprite gfx3, sprite set 1 & set 2 - plane 2 - last 4k
+         when C_DEV_XEV_GFX3_5 =>
+              qnice_dn_wr   <= qnice_dev_ce_i and qnice_dev_we_i;
+              qnice_dn_addr <= "10000" & qnice_dev_addr_i(11 downto 0);    --roms_cs
+              qnice_dn_data <= qnice_dev_data_i(7 downto 0); 
         
          when C_DEV_XEV_2A_GFX4 =>
               qnice_dn_wr   <= qnice_dev_ce_i and qnice_dev_we_i;
