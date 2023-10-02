@@ -465,7 +465,7 @@ begin
                 video_blue  <= main_video_blue  & main_video_blue;
             end if;
 
-            video_hs     <= not main_video_hs;
+            video_hs     <= main_video_hs;
             video_vs     <= main_video_vs;
             video_hblank <= main_video_hblank;
             video_vblank <= main_video_vblank;
