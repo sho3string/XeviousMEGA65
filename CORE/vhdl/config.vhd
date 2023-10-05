@@ -76,7 +76,7 @@ type WHS_RECORD_ARRAY_TYPE is array (0 to WHS_RECORDS - 1) of WHS_RECORD_TYPE;
 
 constant SCR_WELCOME : string :=
 
-   "Xevious V0.5.1 (beta)\n" &
+   "Xevious V0.5.0 (beta)\n" &
    "--------------------\n" &
    "\n" &
    "MiSTer port done by Muse in 2023\n\n" &
@@ -88,7 +88,7 @@ constant SCR_WELCOME : string :=
    "Credits  : Press '5' or '6'\n"        & 
    "Start    : Press '1' or '2'\n"        &
    "Pause    : Press 'p'\n"               &
-   "Controls : Joy 1 or arrows & space\n" &
+   "Controls : Joy 1 & space for bomb\n"  &
    "Svc 1    : Press 's' \n"              &
    "Svc Mode : Caps-Lock on\n"            &
    "\n\n    Press Space to continue.\n"; 
@@ -366,7 +366,7 @@ constant OPTM_ITEMS        : string :=
    " Game Setup\n"          &
    "\n"                     &
    " Atari version\n"       &
-   " Namco  version\n"      &
+   " Namco version\n"       &
    "\n"                     & 
    " Atari dip switches\n"  &
    " DSW A & B\n"           &
@@ -390,7 +390,7 @@ constant OPTM_ITEMS        : string :=
    " 7 - Unused\n"          &
    "\n"                     &
    " Back to main menu\n"   &
-   " Namco  dip switches\n" &
+   " Namco dip switches\n"  &
    " DSW A & B\n"           &
    "\n"                     &
    " 0 - Coinage A\n"       &
@@ -426,25 +426,25 @@ constant OPTM_G_HDMI       : integer := 3;
 constant OPTM_G_ROT90      : integer := 4;
 constant OPTM_G_FLIP       : integer := 5;
 constant OPTM_G_CRT        : integer := 6;
--- Midway DIPS --
+-- ATARI DIPS --
 -- Dipswitch B
-constant OPTM_G_MIDWAY_DSWB0      : integer := 7;
-constant OPTM_G_MIDWAY_DSWB1      : integer := 8;
-constant OPTM_G_MIDWAY_DSWB2      : integer := 9;
-constant OPTM_G_MIDWAY_DSWB3      : integer := 10;
-constant OPTM_G_MIDWAY_DSWB4      : integer := 11;
-constant OPTM_G_MIDWAY_DSWB5      : integer := 12;
-constant OPTM_G_MIDWAY_DSWB6      : integer := 13;
-constant OPTM_G_MIDWAY_DSWB7      : integer := 14;
+constant OPTM_G_ATARI_DSWB0      : integer := 7;
+constant OPTM_G_ATARI_DSWB1      : integer := 8;
+constant OPTM_G_ATARI_DSWB2      : integer := 9;
+constant OPTM_G_ATARI_DSWB3      : integer := 10;
+constant OPTM_G_ATARI_DSWB4      : integer := 11;
+constant OPTM_G_ATARI_DSWB5      : integer := 12;
+constant OPTM_G_ATARI_DSWB6      : integer := 13;
+constant OPTM_G_ATARI_DSWB7      : integer := 14;
 -- Dipswitch A
-constant OPTM_G_MIDWAY_DSWA0      : integer := 15;
-constant OPTM_G_MIDWAY_DSWA1      : integer := 16;
-constant OPTM_G_MIDWAY_DSWA2      : integer := 17;
-constant OPTM_G_MIDWAY_DSWA3      : integer := 18;
-constant OPTM_G_MIDWAY_DSWA4      : integer := 19;
-constant OPTM_G_MIDWAY_DSWA5      : integer := 20;
-constant OPTM_G_MIDWAY_DSWA6      : integer := 21;
-constant OPTM_G_MIDWAY_DSWA7      : integer := 22;
+constant OPTM_G_ATARI_DSWA0      : integer := 15;
+constant OPTM_G_ATARI_DSWA1      : integer := 16;
+constant OPTM_G_ATARI_DSWA2      : integer := 17;
+constant OPTM_G_ATARI_DSWA3      : integer := 18;
+constant OPTM_G_ATARI_DSWA4      : integer := 19;
+constant OPTM_G_ATARI_DSWA5      : integer := 20;
+constant OPTM_G_ATARI_DSWA6      : integer := 21;
+constant OPTM_G_ATARI_DSWA7      : integer := 22;
 constant OPTM_G_FLIPJ             : integer := 23;
 constant OPTM_G_SOFTW             : integer := 24;
 
@@ -509,29 +509,29 @@ constant OPTM_GROUPS       : OPTM_GTYPE := ( OPTM_G_TEXT + OPTM_G_HEADLINE,     
                                              OPTM_G_LINE,                                               -- Line
                                              OPTM_G_TEXT + OPTM_G_HEADLINE,                             -- Headline "Game Setup"
                                              OPTM_G_LINE,                                               -- Line
-                                             OPTM_G_SOFTW + OPTM_G_STDSEL,                              -- Midway Software
-                                             OPTM_G_SOFTW,                                              -- Namco Software
+                                             OPTM_G_SOFTW,                                              -- ATARI Software
+                                             OPTM_G_SOFTW + OPTM_G_STDSEL,                              -- Namco Software
                                              OPTM_G_LINE,                                               -- Line
                                              OPTM_G_SUBMENU,                                            -- Dipswitch B Submenu start
                                              OPTM_G_TEXT + OPTM_G_HEADLINE,                             -- Dipswitch B Title
                                              OPTM_G_LINE,                                               -- Line
-                                             OPTM_G_MIDWAY_DSWB0  + OPTM_G_SINGLESEL,                   -- 2 Credits Game
-                                             OPTM_G_MIDWAY_DSWB1  + OPTM_G_SINGLESEL,                   -- Difficulty A \
-                                             OPTM_G_MIDWAY_DSWB2  + OPTM_G_SINGLESEL,                   -- Difficulty B / 
-                                             OPTM_G_MIDWAY_DSWB3  + OPTM_G_SINGLESEL,                   -- Demo Sounds
-                                             OPTM_G_MIDWAY_DSWB4  + OPTM_G_SINGLESEL,                   -- Freeze
-                                             OPTM_G_MIDWAY_DSWB5  + OPTM_G_SINGLESEL,                   -- Rack Test
-                                             OPTM_G_MIDWAY_DSWB6  + OPTM_G_SINGLESEL,                   -- Unused
-                                             OPTM_G_MIDWAY_DSWB7  + OPTM_G_SINGLESEL,                   -- Cabinet
+                                             OPTM_G_ATARI_DSWB0  + OPTM_G_SINGLESEL,                   -- 2 Credits Game
+                                             OPTM_G_ATARI_DSWB1  + OPTM_G_SINGLESEL,                   -- Difficulty A \
+                                             OPTM_G_ATARI_DSWB2  + OPTM_G_SINGLESEL,                   -- Difficulty B / 
+                                             OPTM_G_ATARI_DSWB3  + OPTM_G_SINGLESEL,                   -- Demo Sounds
+                                             OPTM_G_ATARI_DSWB4  + OPTM_G_SINGLESEL,                   -- Freeze
+                                             OPTM_G_ATARI_DSWB5  + OPTM_G_SINGLESEL,                   -- Rack Test
+                                             OPTM_G_ATARI_DSWB6  + OPTM_G_SINGLESEL,                   -- Unused
+                                             OPTM_G_ATARI_DSWB7  + OPTM_G_SINGLESEL,                   -- Cabinet
                                              OPTM_G_LINE,                                               -- Line
-                                             OPTM_G_MIDWAY_DSWA0  + OPTM_G_SINGLESEL,                   -- Coinage A \
-                                             OPTM_G_MIDWAY_DSWA1  + OPTM_G_SINGLESEL,                   -- Coinage B  |
-                                             OPTM_G_MIDWAY_DSWA2  + OPTM_G_SINGLESEL,                   -- Coinage C / 
-                                             OPTM_G_MIDWAY_DSWA3  + OPTM_G_SINGLESEL,                   -- Bonus Life A \
-                                             OPTM_G_MIDWAY_DSWA4  + OPTM_G_SINGLESEL,                   -- Bonus Life B  |
-                                             OPTM_G_MIDWAY_DSWA5  + OPTM_G_SINGLESEL,                   -- Bonus Life C /
-                                             OPTM_G_MIDWAY_DSWA6  + OPTM_G_SINGLESEL,                   -- Lives A \
-                                             OPTM_G_MIDWAY_DSWA7  + OPTM_G_SINGLESEL,                   -- Lives B /
+                                             OPTM_G_ATARI_DSWA0  + OPTM_G_SINGLESEL,                   -- Coinage A \
+                                             OPTM_G_ATARI_DSWA1  + OPTM_G_SINGLESEL,                   -- Coinage B  |
+                                             OPTM_G_ATARI_DSWA2  + OPTM_G_SINGLESEL,                   -- Coinage C / 
+                                             OPTM_G_ATARI_DSWA3  + OPTM_G_SINGLESEL,                   -- Bonus Life A \
+                                             OPTM_G_ATARI_DSWA4  + OPTM_G_SINGLESEL,                   -- Bonus Life B  |
+                                             OPTM_G_ATARI_DSWA5  + OPTM_G_SINGLESEL,                   -- Bonus Life C /
+                                             OPTM_G_ATARI_DSWA6  + OPTM_G_SINGLESEL,                   -- Lives A \
+                                             OPTM_G_ATARI_DSWA7  + OPTM_G_SINGLESEL,                   -- Lives B /
                                              OPTM_G_LINE,                                               -- Line
                                              OPTM_G_CLOSE + OPTM_G_SUBMENU,                             -- Close submenu / back to main menu
                                              OPTM_G_SUBMENU,                                            -- Dipswitch B Submenu start

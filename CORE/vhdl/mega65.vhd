@@ -195,29 +195,29 @@ constant C_MENU_VGA_STD       : natural := 23;
 constant C_MENU_VGA_15KHZHSVS : natural := 27;
 constant C_MENU_VGA_15KHZCS   : natural := 28;
 
-constant C_MENU_MIDWAY        : natural := 34;
+constant C_MENU_ATARI         : natural  := 34;
 constant C_MENU_NAMCO         : natural := 35;
 
--- Midway DIPs
+-- ATARI DIPs
 -- Dipswitch B
-constant C_MENU_MIDWAY_DSWB_0 : natural := 40;
-constant C_MENU_MIDWAY_DSWB_1 : natural := 41;
-constant C_MENU_MIDWAY_DSWB_2 : natural := 42;
-constant C_MENU_MIDWAY_DSWB_3 : natural := 43;
-constant C_MENU_MIDWAY_DSWB_4 : natural := 44;
-constant C_MENU_MIDWAY_DSWB_5 : natural := 45;
-constant C_MENU_MIDWAY_DSWB_6 : natural := 46;
-constant C_MENU_MIDWAY_DSWB_7 : natural := 47;
+constant C_MENU_ATARI_DSWB_0 : natural := 40;
+constant C_MENU_ATARI_DSWB_1 : natural := 41;
+constant C_MENU_ATARI_DSWB_2 : natural := 42;
+constant C_MENU_ATARI_DSWB_3 : natural := 43;
+constant C_MENU_ATARI_DSWB_4 : natural := 44;
+constant C_MENU_ATARI_DSWB_5 : natural := 45;
+constant C_MENU_ATARI_DSWB_6 : natural := 46;
+constant C_MENU_ATARI_DSWB_7 : natural := 47;
 
 -- Dipswitch A
-constant C_MENU_MIDWAY_DSWA_0 : natural := 49;
-constant C_MENU_MIDWAY_DSWA_1 : natural := 50;
-constant C_MENU_MIDWAY_DSWA_2 : natural := 51;
-constant C_MENU_MIDWAY_DSWA_3 : natural := 52;
-constant C_MENU_MIDWAY_DSWA_4 : natural := 53;
-constant C_MENU_MIDWAY_DSWA_5 : natural := 54;
-constant C_MENU_MIDWAY_DSWA_6 : natural := 55;
-constant C_MENU_MIDWAY_DSWA_7 : natural := 56;
+constant C_MENU_ATARI_DSWA_0 : natural := 49;
+constant C_MENU_ATARI_DSWA_1 : natural := 50;
+constant C_MENU_ATARI_DSWA_2 : natural := 51;
+constant C_MENU_ATARI_DSWA_3 : natural := 52;
+constant C_MENU_ATARI_DSWA_4 : natural := 53;
+constant C_MENU_ATARI_DSWA_5 : natural := 54;
+constant C_MENU_ATARI_DSWA_6 : natural := 55;
+constant C_MENU_ATARI_DSWA_7 : natural := 56;
 
 
 -- Namco DIPs
@@ -340,16 +340,16 @@ begin
    video_clk_o  <= video_clk;
    video_rst_o  <= video_rst;
    
-   dsw_a_i <= main_osm_control_i(C_MENU_MIDWAY_DSWA_7) &
-              main_osm_control_i(C_MENU_MIDWAY_DSWA_6) &
-              main_osm_control_i(C_MENU_MIDWAY_DSWA_5) &
-              main_osm_control_i(C_MENU_MIDWAY_DSWA_4) &
-              main_osm_control_i(C_MENU_MIDWAY_DSWA_3) &
-              main_osm_control_i(C_MENU_MIDWAY_DSWA_2) &
-              main_osm_control_i(C_MENU_MIDWAY_DSWA_1) &
-              main_osm_control_i(C_MENU_MIDWAY_DSWA_0)  when main_osm_control_i(C_MENU_MIDWAY) = '1' else
+   dsw_a_i <= main_osm_control_i(C_MENU_ATARI_DSWA_7) &
+              main_osm_control_i(C_MENU_ATARI_DSWA_6) &
+              main_osm_control_i(C_MENU_ATARI_DSWA_5) &
+              main_osm_control_i(C_MENU_ATARI_DSWA_4) &
+              main_osm_control_i(C_MENU_ATARI_DSWA_3) &
+              main_osm_control_i(C_MENU_ATARI_DSWA_2) &
+              main_osm_control_i(C_MENU_ATARI_DSWA_1) &
+              main_osm_control_i(C_MENU_ATARI_DSWA_0)  when main_osm_control_i(C_MENU_ATARI) = '1' else
                     
-              main_osm_control_i(C_MENU_NAMCO_DSWA_7) &
+              main_osm_control_i(C_MENU_NAMCO_DSWA_7) & 
               main_osm_control_i(C_MENU_NAMCO_DSWA_6) &
               main_osm_control_i(C_MENU_NAMCO_DSWA_5) &
               main_osm_control_i(C_MENU_NAMCO_DSWA_4) &
@@ -358,16 +358,16 @@ begin
               main_osm_control_i(C_MENU_NAMCO_DSWA_1) &
               main_osm_control_i(C_MENU_NAMCO_DSWA_0);       
    
-  dsw_b_i <=  main_osm_control_i(C_MENU_MIDWAY_DSWB_7) &
-              main_osm_control_i(C_MENU_MIDWAY_DSWB_6) &
-              main_osm_control_i(C_MENU_MIDWAY_DSWB_5) &
-              main_osm_control_i(C_MENU_MIDWAY_DSWB_4) &
-              main_osm_control_i(C_MENU_MIDWAY_DSWB_3) &
-              main_osm_control_i(C_MENU_MIDWAY_DSWB_2) &
-              main_osm_control_i(C_MENU_MIDWAY_DSWB_1) &
-              main_osm_control_i(C_MENU_MIDWAY_DSWB_0)  when main_osm_control_i(C_MENU_MIDWAY) = '1' else
+  dsw_b_i <=  main_osm_control_i(C_MENU_ATARI_DSWB_7) &
+              main_osm_control_i(C_MENU_ATARI_DSWB_6) &
+              main_osm_control_i(C_MENU_ATARI_DSWB_5) &
+              main_osm_control_i(C_MENU_ATARI_DSWB_4) &
+              main_osm_control_i(C_MENU_ATARI_DSWB_3) &
+              main_osm_control_i(C_MENU_ATARI_DSWB_2) &
+              main_osm_control_i(C_MENU_ATARI_DSWB_1) &
+              main_osm_control_i(C_MENU_ATARI_DSWB_0)  when main_osm_control_i(C_MENU_ATARI) = '1' else
                     
-              main_osm_control_i(C_MENU_NAMCO_DSWB_7) &
+              '0' & --main_osm_control_i(C_MENU_NAMCO_DSWB_7) & -- disable broken cocktail mode
               main_osm_control_i(C_MENU_NAMCO_DSWB_6) &
               main_osm_control_i(C_MENU_NAMCO_DSWB_5) &
               main_osm_control_i(C_MENU_NAMCO_DSWB_4) &

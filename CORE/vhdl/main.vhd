@@ -153,6 +153,8 @@ signal key_reset, key_service : std_logic;
 signal key_p1_up, key_p1_left, key_p1_down, key_p1_right, key_p1_fire, key_p1_bomb : std_logic;
 signal key_p2_up, key_p2_left, key_p2_down, key_p2_right, key_p2_fire, key_p2_bomb : std_logic;
 
+signal bomb_auto : std_logic;
+
 begin
    
     audio_left_o(15) <= not audio(15);
@@ -164,8 +166,17 @@ begin
     options(1) <= osm_control_i(C_MENU_OSMDIM);
     flip_screen <= osm_control_i(C_MENU_FLIP);
     
-    -- if pause_cpu is not asserted, it's safe to enter the service/test mode.
-    -- this prevents undesired state of the game when pause_cpu is asserted whilst self_test is enabled.
+    
+    i_bombtrigger : entity work.bombtrigger
+    port map (
+    
+    clk_i           => clk_main_i, -- use the core's 18mhz clock
+                    --reset the time when the fire button is not depressed
+    reset_i         => reset,
+    enable_i        => '1',                                        
+    fire_i          => joy_1_fire_n_i or keyboard_n(m65_right_shift) or joy_2_fire_n_i,
+    bomb_o          => bomb_auto           -- c
+    );
     
     process (clk_main_i)
         begin
@@ -269,7 +280,7 @@ begin
     
     -- dip a and b are labelled back to front in MiSTer core, hence this workaround.
     dip_switch_a    => not dsw_b_i,
-    dip_switch_b    => not (dsw_a_i(7 downto 5) & (not keyboard_n(m65_space)) & dsw_a_i(3 downto 1) & (not keyboard_n(m65_space))),
+    dip_switch_b    => not (dsw_a_i(7 downto 5) & (not keyboard_n(m65_space) or not bomb_auto) & dsw_a_i(3 downto 1) & (not keyboard_n(m65_space) or not bomb_auto)),
     
     h_offset   => status(27 downto 24),
     v_offset   => status(31 downto 28),
