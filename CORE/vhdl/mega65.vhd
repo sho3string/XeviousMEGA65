@@ -195,7 +195,7 @@ constant C_MENU_VGA_STD       : natural := 23;
 constant C_MENU_VGA_15KHZHSVS : natural := 27;
 constant C_MENU_VGA_15KHZCS   : natural := 28;
 
-constant C_MENU_ATARI         : natural  := 34;
+constant C_MENU_ATARI         : natural := 34;
 constant C_MENU_NAMCO         : natural := 35;
 
 -- ATARI DIPs
@@ -218,7 +218,6 @@ constant C_MENU_ATARI_DSWA_4 : natural := 53;
 constant C_MENU_ATARI_DSWA_5 : natural := 54;
 constant C_MENU_ATARI_DSWA_6 : natural := 55;
 constant C_MENU_ATARI_DSWA_7 : natural := 56;
-
 
 -- Namco DIPs
 -- Dipswitch B

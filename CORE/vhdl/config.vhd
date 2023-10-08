@@ -77,7 +77,7 @@ type WHS_RECORD_ARRAY_TYPE is array (0 to WHS_RECORDS - 1) of WHS_RECORD_TYPE;
 constant SCR_WELCOME : string :=
 
    "Xevious V0.5.0 (beta)\n" &
-   "--------------------\n" &
+   "--------------------\n"  &
    "\n" &
    "MiSTer port done by Muse in 2023\n\n" &
 
@@ -88,7 +88,9 @@ constant SCR_WELCOME : string :=
    "Credits  : Press '5' or '6'\n"        & 
    "Start    : Press '1' or '2'\n"        &
    "Pause    : Press 'p'\n"               &
-   "Controls : Joy 1 & space for bomb\n"  &
+   "Controls : Joystick 1\n"              &
+   "         : Hold fire for bomb\n"      &
+   "         : Or space bar for bomb\n"   &
    "Svc 1    : Press 's' \n"              &
    "Svc Mode : Caps-Lock on\n"            &
    "\n\n    Press Space to continue.\n"; 
@@ -320,7 +322,7 @@ constant OPTM_S_SAVING     : string := "<Saving>";          -- the internal writ
 --             Do use a lower case \n. If you forget one of them or if you use upper case, you will run into undefined behavior.
 --          2. Start each line that contains an actual menu item (multi- or single-select) with a Space character,
 --             otherwise you will experience visual glitches.
-constant OPTM_SIZE         : natural := 83;  -- amount of items including empty lines:
+constant OPTM_SIZE         : natural := 99;  -- amount of items including empty lines:
                                              -- needs to be equal to the number of lines in OPTM_ITEMS and amount of items in OPTM_GROUPS
                                              -- IMPORTANT: If SAVE_SETTINGS is true and OPTM_SIZE changes: Make sure to re-generate and
                                              -- and re-distribute the config file. You can make a new one using M2M/tools/make_config.sh
@@ -328,10 +330,10 @@ constant OPTM_SIZE         : natural := 83;  -- amount of items including empty 
 -- Net size of the Options menu on the screen in characters (excluding the frame, which is hardcoded to two characters)
 -- Without submenus: Use OPTM_SIZE as height, otherwise count how large the actually visible main menu is.
 constant OPTM_DX           : natural := 23;
-constant OPTM_DY           : natural := 23;
+constant OPTM_DY           : natural := 25;
 
 constant OPTM_ITEMS        : string :=
-   " Xevious\n"              &
+   " Xevious\n"             &
    "\n"                     &
    " Pause when OSD open\n" &
    " Dim Video after 10s\n" &
@@ -413,6 +415,22 @@ constant OPTM_ITEMS        : string :=
    "\n"                     &
    " Back to main menu\n"   &
    "\n"                     &
+   " Bombtrigger settings\n"&
+   " Bombtrigger menu\n"    &
+   "\n"                     &
+   " Disable/Off\n"         &
+   " 0.00s\n"               &
+   " 0.15s\n"               &
+   " 0.20s\n"               &
+   " 0.25s\n"				&
+   " 0.30s\n"               &
+   " 0.35s\n"               &
+   " 0.40s\n"               &
+   " 0.45s\n"               &
+   " 0.50s\n"               &
+   "\n"                     &
+   " Back to main menu\n"   &
+   "\n"                     &
    " Close Menu\n";
 
 -- define your own constants here and choose meaningful names
@@ -445,8 +463,8 @@ constant OPTM_G_ATARI_DSWA4      : integer := 19;
 constant OPTM_G_ATARI_DSWA5      : integer := 20;
 constant OPTM_G_ATARI_DSWA6      : integer := 21;
 constant OPTM_G_ATARI_DSWA7      : integer := 22;
-constant OPTM_G_FLIPJ             : integer := 23;
-constant OPTM_G_SOFTW             : integer := 24;
+constant OPTM_G_FLIPJ            : integer := 23;
+constant OPTM_G_SOFTW            : integer := 24;
 
 -- Namco DIPS --
 -- Dipswitch B
@@ -468,6 +486,10 @@ constant OPTM_G_NAMCO_DSWA5       : integer := 38;
 constant OPTM_G_NAMCO_DSWA6       : integer := 39;
 constant OPTM_G_NAMCO_DSWA7       : integer := 40;
 constant OPTM_G_VGA_MODES         : integer := 41;
+
+-- Bombtrigger
+constant OPTM_G_BOMB_TRIG         : natural := 42;
+
 
 -- !!! DO NOT TOUCH !!!
 type OPTM_GTYPE is array (0 to OPTM_SIZE - 1) of integer range 0 to 2**OPTM_GTC- 1;
@@ -540,7 +562,7 @@ constant OPTM_GROUPS       : OPTM_GTYPE := ( OPTM_G_TEXT + OPTM_G_HEADLINE,     
                                              OPTM_G_NAMCO_DSWB0  + OPTM_G_SINGLESEL,                    -- Difficulty A \
                                              OPTM_G_NAMCO_DSWB1  + OPTM_G_SINGLESEL,                    -- Difficulty B / 
                                              OPTM_G_NAMCO_DSWB2  + OPTM_G_SINGLESEL,                    -- Unused
-                                             OPTM_G_NAMCO_DSWB3  + OPTM_G_SINGLESEL,                       -- Demo Sounds
+                                             OPTM_G_NAMCO_DSWB3  + OPTM_G_SINGLESEL,                    -- Demo Sounds
                                              OPTM_G_NAMCO_DSWB4  + OPTM_G_SINGLESEL,                    -- Freeze
                                              OPTM_G_NAMCO_DSWB5  + OPTM_G_SINGLESEL,                    -- Rack Test
                                              OPTM_G_NAMCO_DSWB6  + OPTM_G_SINGLESEL,                    -- Unused
@@ -556,6 +578,22 @@ constant OPTM_GROUPS       : OPTM_GTYPE := ( OPTM_G_TEXT + OPTM_G_HEADLINE,     
                                              OPTM_G_NAMCO_DSWA7  + OPTM_G_SINGLESEL,                    -- Lives B /
                                              OPTM_G_LINE,                                               -- Line
                                              OPTM_G_CLOSE + OPTM_G_SUBMENU,                             -- Close submenu / back to main menu
+                                             OPTM_G_LINE,                                               -- Line
+                                             OPTM_G_SUBMENU,                                            -- Bombtrigger sub menu
+                                             OPTM_G_TEXT + OPTM_G_HEADLINE,                             -- Bonbtrigger title
+                                             OPTM_G_LINE,                                               -- Line
+                                             OPTM_G_BOMB_TRIG,                                          -- bombtrigger enable
+                                             OPTM_G_BOMB_TRIG,                                          -- 0ms
+                                             OPTM_G_BOMB_TRIG,                                          -- 150ms
+                                             OPTM_G_BOMB_TRIG,                                          -- 200ms
+                                             OPTM_G_BOMB_TRIG    + OPTM_G_STDSEL,                       -- 250ms
+                                             OPTM_G_BOMB_TRIG,                                          -- 300ms 
+                                             OPTM_G_BOMB_TRIG,                                          -- 350ms
+                                             OPTM_G_BOMB_TRIG,                                          -- 400ms
+                                             OPTM_G_BOMB_TRIG,                                          -- 450ms
+                                             OPTM_G_BOMB_TRIG,                                          -- 500ms
+                                             OPTM_G_LINE,                                               -- Line
+                                             OPTM_G_CLOSE + OPTM_G_SUBMENU,                             -- Close Sub Menu
                                              OPTM_G_LINE,                                               -- Line
                                              OPTM_G_CLOSE                                               -- Close Menu
                                            );

@@ -74,9 +74,7 @@ entity main is
       dn_data_i               : in  std_logic_vector(7 downto 0);
       dn_wr_i                 : in  std_logic;
 
-      sp_grphx_addr           : out std_logic_vector(14 downto 0);
-      
-      osm_control_i      : in  std_logic_vector(255 downto 0)
+      osm_control_i           : in  std_logic_vector(255 downto 0)
       
    );
 end entity main;
@@ -102,7 +100,7 @@ signal audio             : std_logic_vector(15 downto 0);
 -- b[0]: osd button
 
 signal buttons           : std_logic_vector(1 downto 0);
-signal reset             : std_logic  := reset_hard_i or reset_soft_i;
+signal reset             : std_logic;
 
 
 -- highscore system
@@ -118,6 +116,18 @@ signal self_test        : std_logic;
 constant C_MENU_OSMPAUSE     : natural := 2;
 constant C_MENU_OSMDIM       : natural := 3;
 constant C_MENU_FLIP         : natural := 9;
+
+-- Bombtrigger
+constant C_MENU_BOMB_TRIG_EN  : natural := 85;
+constant C_MENU_BOMB_TRIG_0   : natural := 86;
+constant C_MENU_BOMB_TRIG_1   : natural := 87;
+constant C_MENU_BOMB_TRIG_2   : natural := 88;
+constant C_MENU_BOMB_TRIG_3   : natural := 89;
+constant C_MENU_BOMB_TRIG_4   : natural := 90;
+constant C_MENU_BOMB_TRIG_5   : natural := 91;
+constant C_MENU_BOMB_TRIG_6   : natural := 92;
+constant C_MENU_BOMB_TRIG_7   : natural := 93;
+constant C_MENU_BOMB_TRIG_8   : natural := 94;
 
 -- Game player inputs
 constant m65_1             : integer := 56; --Player 1 Start
@@ -153,10 +163,12 @@ signal key_reset, key_service : std_logic;
 signal key_p1_up, key_p1_left, key_p1_down, key_p1_right, key_p1_fire, key_p1_bomb : std_logic;
 signal key_p2_up, key_p2_left, key_p2_down, key_p2_right, key_p2_fire, key_p2_bomb : std_logic;
 
-signal bomb_auto : std_logic;
+signal p1_bomb_auto : std_logic := '1';
+signal p2_bomb_auto : std_logic := '1';
 
 begin
    
+    reset <= reset_hard_i or reset_soft_i;
     audio_left_o(15) <= not audio(15);
     audio_left_o(14 downto 0) <= signed(audio(14 downto 0));
     audio_right_o(15) <= not audio(15);
@@ -166,18 +178,7 @@ begin
     options(1) <= osm_control_i(C_MENU_OSMDIM);
     flip_screen <= osm_control_i(C_MENU_FLIP);
     
-    
-    i_bombtrigger : entity work.bombtrigger
-    port map (
-    
-    clk_i           => clk_main_i, -- use the core's 18mhz clock
-                    --reset the time when the fire button is not depressed
-    reset_i         => reset,
-    enable_i        => '1',                                        
-    fire_i          => joy_1_fire_n_i or keyboard_n(m65_right_shift) or joy_2_fire_n_i,
-    bomb_o          => bomb_auto           -- c
-    );
-    
+   
     process (clk_main_i)
         begin
         if rising_edge(clk_main_i) then
@@ -240,6 +241,32 @@ begin
         end if;
     end process;
 
+    -- for player 1 and player 2 ( cocktail / table mode )
+    i_bombtrigger : entity work.bombtrigger
+    port map (
+    
+    clk_i           => clk_main_i, -- use the core's 18mhz clock
+    reset_i         => reset,
+    enable_n_i      => osm_control_i(C_MENU_BOMB_TRIG_EN),
+    -- player1                                        
+    fire1_n_i       => joy_1_fire_n_i,
+    bomb1_o         => p1_bomb_auto,
+    -- player2                                       
+    fire2_n_i       => joy_2_fire_n_i,
+    bomb2_o         => p2_bomb_auto,
+    
+    trigger_sw_i(0) => osm_control_i(C_MENU_BOMB_TRIG_0),
+    trigger_sw_i(1) => osm_control_i(C_MENU_BOMB_TRIG_1),
+    trigger_sw_i(2) => osm_control_i(C_MENU_BOMB_TRIG_2),
+    trigger_sw_i(3) => osm_control_i(C_MENU_BOMB_TRIG_3),
+    trigger_sw_i(4) => osm_control_i(C_MENU_BOMB_TRIG_4),
+    trigger_sw_i(5) => osm_control_i(C_MENU_BOMB_TRIG_5),
+    trigger_sw_i(6) => osm_control_i(C_MENU_BOMB_TRIG_6),
+    trigger_sw_i(7) => osm_control_i(C_MENU_BOMB_TRIG_7),
+    trigger_sw_i(8) => osm_control_i(C_MENU_BOMB_TRIG_8)
+    
+    );
+    
 
     i_xevious : entity work.xevious
     port map (
@@ -280,7 +307,7 @@ begin
     
     -- dip a and b are labelled back to front in MiSTer core, hence this workaround.
     dip_switch_a    => not dsw_b_i,
-    dip_switch_b    => not (dsw_a_i(7 downto 5) & (not keyboard_n(m65_space) or not bomb_auto) & dsw_a_i(3 downto 1) & (not keyboard_n(m65_space) or not bomb_auto)),
+    dip_switch_b    => not (dsw_a_i(7 downto 5) & (not keyboard_n(m65_space) or not p2_bomb_auto) & dsw_a_i(3 downto 1) & (not keyboard_n(m65_space) or not p1_bomb_auto)),
     
     h_offset   => status(27 downto 24),
     v_offset   => status(31 downto 28),
