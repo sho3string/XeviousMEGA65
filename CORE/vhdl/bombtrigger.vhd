@@ -1,6 +1,6 @@
 ----------------------------------------------------------------------------------
 -- Company: 
--- Engineer: Muse ( Samuel Pozidis )
+-- Engineer: Muse ( Samuel P )
 -- 
 -- Create Date: 09/24/2023 11:43:13 AM
 -- Design Name: Bombtrigger
@@ -37,8 +37,8 @@ port (
  -- player 2
  fire2_n_i       : in std_logic;
  bomb2_o         : out std_logic;
- -- 9 
- trigger_sw_i    : in std_logic_vector(8 downto 0)
+ -- trigger select switch
+ trigger_sel_i   : in std_logic_vector(3 downto 0)
 );
 
 end entity bombtrigger;
@@ -55,18 +55,18 @@ process (clk_i,fire1_n_i,fire2_n_i)
 begin
     if rising_edge(clk_i) then
     
-       bomb_delay <= 0 when trigger_sw_i(0) = '1' else         -- no delay 
-                   2700000 when trigger_sw_i(1) = '1' else     -- 0.15s
-                   3600000 when trigger_sw_i(2) = '1' else     -- 0.20s
-                   4500000 when trigger_sw_i(3) = '1' else     -- 0.25s
-                   5400000 when trigger_sw_i(4) = '1' else     -- 0.30s
-                   6300000 when trigger_sw_i(5) = '1' else     -- 0.35s
-                   7200000 when trigger_sw_i(6) = '1' else     -- 0.40s
-                   8100000 when trigger_sw_i(7) = '1' else     -- 0.45s
-                   9000000 when trigger_sw_i(8) = '1';         -- 0.50s
-    
        if enable_n_i = '0' then
+       
            -- check the delay setting from the OSM.
+           bomb_delay <= 0 when trigger_sel_i = "0000" else     -- no delay 
+                   2700000 when trigger_sel_i = "0001" else     -- 0.15s
+                   3600000 when trigger_sel_i = "0010" else     -- 0.20s
+                   4500000 when trigger_sel_i = "0011" else     -- 0.25s
+                   5400000 when trigger_sel_i = "0100" else     -- 0.30s
+                   6300000 when trigger_sel_i = "0101" else     -- 0.35s
+                   7200000 when trigger_sel_i = "0110" else     -- 0.40s
+                   8100000 when trigger_sel_i = "0111" else     -- 0.45s
+                   9000000 when trigger_sel_i = "1000";         -- 0.50s
            
            if reset_i = '1' then
               bomb1_trigger_count <= bomb_delay;

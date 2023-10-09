@@ -152,19 +152,9 @@ constant m65_capslock      : integer := 72; --Service Mode
 constant m65_help          : integer := 67; --Help key
 
 
-
-signal ps2_key : std_logic_vector(10 downto 0 );
-signal pressed : std_logic;
-signal old_state : std_logic;
-signal key_start1, key_start2 : std_logic;
-signal key_coin1, key_coin2, key_coin3, key_coin4 : std_logic;
-signal key_reset, key_service : std_logic;
-
-signal key_p1_up, key_p1_left, key_p1_down, key_p1_right, key_p1_fire, key_p1_bomb : std_logic;
-signal key_p2_up, key_p2_left, key_p2_down, key_p2_right, key_p2_fire, key_p2_bomb : std_logic;
-
-signal p1_bomb_auto : std_logic := '1';
-signal p2_bomb_auto : std_logic := '1';
+signal p1_bomb_auto : std_logic;
+signal p2_bomb_auto : std_logic;
+signal trigger_sel  : std_logic_vector(3 downto 0);
 
 begin
    
@@ -178,69 +168,18 @@ begin
     options(1) <= osm_control_i(C_MENU_OSMDIM);
     flip_screen <= osm_control_i(C_MENU_FLIP);
     
-   
-    process (clk_main_i)
-        begin
-        if rising_edge(clk_main_i) then
-            if  not pause_cpu then 
-                    self_test <= '1' when not keyboard_n(m65_capslock) else '0';
-            end if;
-  
-        end if;
-    end process;
     
-    pressed <= ps2_key(9);
-    process (clk_main_i)
-        begin
-        if rising_edge(clk_main_i) then
-            old_state <= ps2_key(10);
-            if old_state /= ps2_key(10) then
-                case ps2_key(8 downto 0) is
-                    when x"16" =>
-                        key_start1  <= pressed; -- 1
-                    when x"1E" =>
-                        key_start2  <= pressed; -- 2
-                    when x"2E" =>
-                        key_coin1   <= pressed; -- 5
-                    when x"36" =>
-                        key_coin2   <= pressed; -- 6
-                    when x"04" =>
-                        key_reset   <= pressed; -- F3
-                    when x"46" =>
-                        key_service <= pressed; -- 9
-                        
-                    when x"75" => 
-                        key_p1_up   <= pressed; -- up
-			        when x"6b" =>
-			            key_p1_left <= pressed; -- left
-			        when x"72" =>
-			            key_p1_down <= pressed; -- down
-			        when x"74" =>
-			            key_p1_right<= pressed; -- right
-			        when x"014"=>
-			            key_p1_fire <= pressed; -- lctrl    
-			        when x"011"=>
-			            key_p1_bomb <= pressed; -- lalt
-			            
-			        when x"02d" =>
-			            key_p2_up   <= pressed; -- r
-			        when x"023" => 
-			            key_p2_left <= pressed; -- d
-			        when x"02b" =>
-			             key_p2_down <= pressed; -- f
-			        when x"034" =>
-			             key_p2_right<= pressed; -- g
-			        when x"01c" =>
-			             key_p2_fire <= pressed; -- a
-			        when x"01b" =>
-			             key_p2_bomb <= pressed; -- s  
-                    when others =>
-                        null; -- Do nothing for other cases
-                end case;
-            end if;
-        end if;
-    end process;
-
+    trigger_sel <="0000" when osm_control_i(C_MENU_BOMB_TRIG_0) = '1' else
+                  "0001" when osm_control_i(C_MENU_BOMB_TRIG_1) = '1' else
+                  "0010" when osm_control_i(C_MENU_BOMB_TRIG_2) = '1' else
+                  "0011" when osm_control_i(C_MENU_BOMB_TRIG_3) = '1' else
+                  "0100" when osm_control_i(C_MENU_BOMB_TRIG_4) = '1' else
+                  "0101" when osm_control_i(C_MENU_BOMB_TRIG_5) = '1' else
+                  "0110" when osm_control_i(C_MENU_BOMB_TRIG_6) = '1' else
+                  "0111" when osm_control_i(C_MENU_BOMB_TRIG_7) = '1' else
+                  "1000" when osm_control_i(C_MENU_BOMB_TRIG_8) = '1';
+                  
+    
     -- for player 1 and player 2 ( cocktail / table mode )
     i_bombtrigger : entity work.bombtrigger
     port map (
@@ -254,17 +193,8 @@ begin
     -- player2                                       
     fire2_n_i       => joy_2_fire_n_i,
     bomb2_o         => p2_bomb_auto,
-    
-    trigger_sw_i(0) => osm_control_i(C_MENU_BOMB_TRIG_0),
-    trigger_sw_i(1) => osm_control_i(C_MENU_BOMB_TRIG_1),
-    trigger_sw_i(2) => osm_control_i(C_MENU_BOMB_TRIG_2),
-    trigger_sw_i(3) => osm_control_i(C_MENU_BOMB_TRIG_3),
-    trigger_sw_i(4) => osm_control_i(C_MENU_BOMB_TRIG_4),
-    trigger_sw_i(5) => osm_control_i(C_MENU_BOMB_TRIG_5),
-    trigger_sw_i(6) => osm_control_i(C_MENU_BOMB_TRIG_6),
-    trigger_sw_i(7) => osm_control_i(C_MENU_BOMB_TRIG_7),
-    trigger_sw_i(8) => osm_control_i(C_MENU_BOMB_TRIG_8)
-    
+    trigger_sel_i   => trigger_sel
+        
     );
     
 
@@ -286,7 +216,7 @@ begin
     
     audio       => audio,
     
-    self_test  => self_test,
+    self_test  => not keyboard_n(m65_capslock),
     service    => not keyboard_n(m65_s),
     coin1      => not keyboard_n(m65_5),
     coin2      => not keyboard_n(m65_6),

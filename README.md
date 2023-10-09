@@ -1,29 +1,30 @@
-Galaga for MEGA65
-=================
+Xevious for MEGA65
+==================
 
-Galaga is an iconic arcade classic that has captivated generations of gamers
-with its fast-paced gameplay and vibrant graphics. Originally released in
-1981, this space-themed fixed shooter game has stood the test of time, as it
-continues to be loved and celebrated by both casual and avid gamers alike.
-The simple yet addictive nature of the game, where players control a spaceship
-to defend against swarms of alien invaders, has left an indelible mark on the
-history of video games.
+Xevious (1982):
 
-Now, with the power of the MEGA65, you can experience Galaga in all its glory
-with sublime compatibility and accuracy. The MEGA65, a modern recreation of
-the legendary Commodore 65, offers a retro gaming experience like no other,
-bringing together the nostalgia of classic games with cutting-edge hardware.
-Relive the excitement of this cherished classic, as you dive into the world of
-Galaga on your MEGA65 and enjoy a gaming experience that's as close to the
-original as it gets.
 
-Get ready to embark on an intergalactic adventure, and prepare to be
-transported back in time to the golden era of arcade gaming with
-Galaga on your MEGA65!
+Xevious is considered one of the pioneering titles in the vertical-scrolling shooter genre. The game features a unique blend of both air and ground combat, distinguishing it from many other shooters of its time. Players control the Solvalou, a futuristic aircraft, and must navigate through hostile airspace, destroying both aerial and ground-based enemies.
+
+Key features and elements of Xevious include:
+
+Dual Attack: The Solvalou can fire both a forward-firing blaster for air targets and bombs for ground targets, allowing players to engage enemies from multiple directions.
+
+Varied Enemy Types: The game features a wide range of enemy aircraft, ground-based installations, and bosses, each with its own attack patterns and behaviors.
+
+Terrain Interaction: Players must pay attention to both the aerial and ground elements of the game, as enemy installations on the ground can pose threats, and the landscape can be used for cover.
+
+Power-Ups: Power-ups can be collected to enhance the Solvalou's capabilities and firepower.
+
+Super Xevious (1984):
+
+Super Xevious is an enhanced version of the original Xevious, featuring improved gameplay elements. It retains the core gameplay of its predecessor but adds new features and challenges.
+
+Both games are known for their engaging and fast-paced gameplay, as well as their contribution to the shoot 'em up genre. Porting these classics to an FPGA platform would provide nostalgic gaming experiences for enthusiasts and preserve the legacy of these iconic titles.
 
 This core is based on the
-[MiSTer](https://github.com/MiSTer-devel/Arcade-Galaga_MiSTer)
-Galaga core which
+[MiSTer](https://github.com/MiSTer-devel/Arcade-Xevious_MiSTer)
+Xevious core which
 itself is based on the work of [many others](AUTHORS).
 
 [Muse aka sho3string](https://github.com/sho3string)
@@ -34,76 +35,22 @@ framework and [QNICE-FPGA](https://github.com/sy2002/QNICE-FPGA) for
 FAT32 support (loading ROMs, mounting disks) and for the
 on-screen-menu.
 
-How to install the Galaga core on your MEGA65
----------------------------------------------
+How to install the Xevious core on your MEGA65
+----------------------------------------------
 
-1. **Download ROM**: 
-   Search the web for "mame galaga midway set 1".
-
-2. **Download the Python script**: Download the provided Python script that
-   prepares the ROMs such that the Galaga core is able to use it from
-   [Link](https://github.com/sho3string/GalagaMEGA65/blob/master/galaga_rom_installer.py).
-
-3. **Run the Python script**: Execute the Python script to create a folder
-   with the ROMs. 
-   Use the command `python galaga_rom_installer.py <path to the zip file> <output_folder>`.
-
-   ROM files within the zip arhive are automatically evaluated for the correct SHA256 checksums.
-
-5. **Copy the ROMs to your MEGA65 SD card**: Copy the generated folder with
-   the ROMs to your MEGA65 SD card. You can use either the bottom SD card tray
-   of the MEGA65 or the tray at the backside of the computer (the latter has
-   precedence over the first).
-   The ROMs need to be in the folder `arcade/galaga`.
-   
-   Copy the glgcfg provided in 'arcade/galaga`.
-
-   The core supports the following versions of Galaga. The core does not support bootlegs ( Gallag .etc ),
-   bootlegs require an additional Z80 to simulate one of the custom chips.
-
-   galaga         Galaga (Namco rev. B)                       (Namco, 1981)
-   galagao        Galaga (Namco)                              (Namco, 1981)
-   galagamk       Galaga (Midway set 2)                       (Namco (Midway license), 1981)
-   galagamw       Galaga (Midway set 1)                       (Namco (Midway license), 1981)
-   galagamf       Galaga (Midway set 1 with fast shoot hack)  (Namco (Midway license), 1981)
+WIP
 
 7. **Setting up dip switches**
 
-   There are two dip switch banks of 8 switches on Galaga boards which differ slightly between Namco and Midway versions.
-   Check the following pages to understand how to customise each dip.
+WIP
 
-   Midway ( including fast shoot hack )
-   [Link](http://www.arcaderestoration.com/gamedips/3290/Galaga+Midway+set+1/Galaga.aspx)
-
-   Namco 
-   [Link](http://www.arcaderestoration.com/gamedips/3291/Galaga+Namco/Galaga.aspx)
-   
-   We have provided menu items in the core to select between Namco & Midway dip configuration settings.
-   It is important to select the correct one after copying the files to /arcade/galaga.
-
-   To do this, go to Game Setup after pressing the 'HELP' key, set your software version then set the individual
-   dip switches for that version in the dip section. Use the link above to understand what each switch is for.
-
-   Once done, press the reset switch on the MEGA65 to load the new settings.
-
-   Note: 
-   The earlier Midway set 1 and Namco rev a versions have a bug that allows you to exploit the 'no shoot' glitch.
-   To find out more about it, do a google search.
-
-   This bug was fixed in set 2 and rev B after the problem became widespread in the arcades. But I rarely found a rev b or set 2
-   machine where the trick no longer worked.
-
-
-9. **Download and run the Galaga core**: Follow the instructions on
+9. **Download and run the Xevious core**: Follow the instructions on
   [this site](https://sy2002.github.io/m65cores/) to download and run the
   Galaga core on your MEGA65.
 
 10. **Common problems [WIP]**
 
-    1. Game is frozen or glitching after resetting the core
-   
-    On the Midway setting, make sure the freeze dip is not enabled.
-    On Namco, ensure that the unused setting is disabled.
+WIP
 
 
     

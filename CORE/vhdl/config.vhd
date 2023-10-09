@@ -418,7 +418,7 @@ constant OPTM_ITEMS        : string :=
    " Bombtrigger settings\n"&
    " Bombtrigger menu\n"    &
    "\n"                     &
-   " Disable/Off\n"         &
+   " Disable timer\n"       &
    " 0.00s\n"               &
    " 0.15s\n"               &
    " 0.20s\n"               &

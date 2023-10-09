@@ -242,10 +242,10 @@ constant C_MENU_NAMCO_DSWA_7  : natural := 78;
 
 
 -- Xevious specific video processing
-signal div                    : std_logic_vector(2 downto 0);
-signal dim_video              : std_logic;
-signal dsw_a_i                : std_logic_vector(7 downto 0);
-signal dsw_b_i                : std_logic_vector(7 downto 0);
+signal div          : std_logic_vector(2 downto 0);
+signal dim_video    : std_logic;
+signal dsw_a_i      : std_logic_vector(7 downto 0);
+signal dsw_b_i      : std_logic_vector(7 downto 0);
 
 signal video_ce     : std_logic;
 signal video_red    : std_logic_vector(7 downto 0);

@@ -1,27 +1,29 @@
-Galaga for MEGA65 
+Xevious for MEGA65 
 =================
 
-done in 2023 by Muse
+Done in 2023 by Muse
 	* Muse       github.com/sho3string
+	
+Special thanks to:
 	* sy2002     github.com/sy2002     www.sy2002.de
     * MJoergen   github.com/MJoergen
+	* The Mega65 Community
 
-GalagaMEGA65 is licensed under the terms of GNU/GPL v3, for more information please read the file LICENSE
+XeviousMEGA65 is licensed under the terms of GNU/GPL v3, for more information please read the file LICENSE
 Parts of GalagaMEGA65 are licensed under other Free-software licenses as described in the source code
 
-GalagaMEGA65:
+XeviousMEGA65:
 -------------
 
-  GalagaMEGA65is a port of Arcade-Galaga_MiSTer
+  XeviousMEGA65is a port of Arcade-Xevious_MiSTer
       done by the MiSTer Development Team
-      Original GitHub Repository: https://github.com/MiSTer-devel/Arcade-Galaga_MiSTer
-      Significant contributors:
-      * sorgelig, blackwine & alanswx
-      * CONTRIBUTORS
-      * JimmyStones, MikeS11, hubertbanas, misteraddons, lagomorph, SerErris, eubrunosilva, wwark, MrX-8B & wesclemens
+      Original GitHub Repository: https://github.com/MiSTer-devel/Arcade-Xevious_MiSTer
+     Contributors:
+		https://github.com/MiSTer-devel/Arcade-Xevious_MiSTer/graphs/contributors
+      * sorgelig, MikeS11,blackwine,toryalai1,JimmyStones,misteraddons
+	  * darfpga,alanswx,lagomorph,SerErris,eubrunosilva,hubertbanas,wwark
 
-
-Other than that and my own work, GalagaMEGA65 uses:
+Other than that and my own work, XeviousMEGA65 uses:
 ---------------------------------------------------
 
   * MiSTer2MEGA65 by The MiSTer2MEGA65 Development Team
