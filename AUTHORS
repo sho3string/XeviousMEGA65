@@ -2,12 +2,12 @@ Xevious for MEGA65
 =================
 
 Done in 2023 by Muse
-	* Muse       github.com/sho3string
+    * Muse       github.com/sho3string
 	
 Special thanks to:
-	* sy2002     github.com/sy2002     www.sy2002.de
+    * sy2002     github.com/sy2002     www.sy2002.de
     * MJoergen   github.com/MJoergen
-	* The Mega65 Community
+    * The Mega65 Community
 
 XeviousMEGA65 is licensed under the terms of GNU/GPL v3, for more information please read the file LICENSE
 Parts of GalagaMEGA65 are licensed under other Free-software licenses as described in the source code
@@ -18,10 +18,10 @@ XeviousMEGA65:
   XeviousMEGA65is a port of Arcade-Xevious_MiSTer
       done by the MiSTer Development Team
       Original GitHub Repository: https://github.com/MiSTer-devel/Arcade-Xevious_MiSTer
-     Contributors:
-		https://github.com/MiSTer-devel/Arcade-Xevious_MiSTer/graphs/contributors
+      Contributors:
+      https://github.com/MiSTer-devel/Arcade-Xevious_MiSTer/graphs/contributors
       * sorgelig, MikeS11,blackwine,toryalai1,JimmyStones,misteraddons
-	  * darfpga,alanswx,lagomorph,SerErris,eubrunosilva,hubertbanas,wwark
+      * darfpga,alanswx,lagomorph,SerErris,eubrunosilva,hubertbanas,wwark
 
 Other than that and my own work, XeviousMEGA65 uses:
 ---------------------------------------------------

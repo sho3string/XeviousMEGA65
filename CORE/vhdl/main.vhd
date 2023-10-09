@@ -90,7 +90,6 @@ signal video_rotated     : std_logic;
 signal rotate_ccw        : std_logic := flip_screen;
 signal direct_video      : std_logic;
 signal forced_scandoubler: std_logic;
---signal no_rotate         : std_logic := status(2) OR direct_video;
 signal gamma_bus         : std_logic_vector(21 downto 0);
 signal audio             : std_logic_vector(15 downto 0);
 
@@ -228,7 +227,6 @@ begin
     right1     => not joy_1_right_n_i, --or not keyboard_n(m65_horz_crsr),
     fire1      => not joy_1_fire_n_i, --or not keyboard_n(m65_right_shift),
     fire2      => not joy_2_fire_n_i, --or not keyboard_n(m65_space),
-    -- player 2 joystick is only active in cocktail/table mode.
     up2        => not joy_2_up_n_i,
     down2      => not joy_2_down_n_i,
     left2      => not joy_2_left_n_i,
