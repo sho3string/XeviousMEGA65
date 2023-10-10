@@ -38,7 +38,7 @@ How to install the Xevious core on your MEGA65
 
 1.Download ROM: Download the Xevious MAME ROM ZIP file (do not unzip!) from the internet. Search for xevious.zip or sxeviousj.zip for Super Xevious.
 
-2.Download the Python script: Download the provided Python script that prepares the ROMs such that the Xevious core is able to use it from Link.
+2.Download the Python script: Download the provided Python script that prepares the ROMs such that the Xevious core is able to use it from https://github.com/sho3string/XeviousMEGA65/blob/master/xevious_rom_installer.py
 
 3.Run the Python script: Execute the Python script to create a folder with the ROMs. Use the command python xevious_rom_installer.py <path to the zip file> <output_folder>.
 
