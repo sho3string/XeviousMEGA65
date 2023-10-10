@@ -13,11 +13,10 @@ Varied Enemy Types: The game features a wide range of enemy aircraft, ground-bas
 
 Terrain Interaction: Players must pay attention to both the aerial and ground elements of the game, as enemy installations on the ground can pose threats, and the landscape can be used for cover.
 
-Power-Ups: Power-ups can be collected to enhance the Solvalou's capabilities and firepower.
-
 Super Xevious (1984):
 
 Super Xevious is an enhanced version of the original Xevious, featuring improved gameplay elements. It retains the core gameplay of its predecessor but adds new features and challenges.
+Power-Ups: Power-ups can be collected to enhance the Solvalou's capabilities and firepower.
 
 Both games are known for their engaging and fast-paced gameplay, as well as their contribution to the shoot 'em up genre. Porting these classics to an FPGA platform would provide nostalgic gaming experiences for enthusiasts and preserve the legacy of these iconic titles.
 
@@ -45,26 +44,19 @@ How to install the Xevious core on your MEGA65
 
 4.ROM files within the zip arhive are automatically evaluated for the correct SHA1 checksums.
 
-Copy the ROMs to your MEGA65 SD card: Copy the generated folder with the ROMs to your MEGA65 SD card. You can use either the bottom SD card tray of the MEGA65 or the tray at the backside of the computer (the latter has precedence over the first). The ROMs need to be in the folder arcade/xevious.
+Copy the ROMs to your MEGA65 SD card: Copy the generated folder with the ROMs to your MEGA65 SD card. You can use either the bottom SD card tray of the MEGA65 or the tray at the backside of the computer (the latter has precedence over the first). The ROMs need to be in the folder arcade/xevious.  
 
-The script will also generate the xevcfg file which should also exist in the arcade/xevious folder. 
+The script will also generate the xevcfg file and supports the following versions of Xevious.  
 
-The script supports the following versions of Bosconian.
-xevious    - Xevious (Namco)
-xeviousa   - Xevious (Atari, harder)
-xeviousc   - Xevious (Atari, Namco PCB)
-sxeviousj  - Super Xevious (Japan)
+xevious    - Xevious (Namco)  
+xeviousa   - Xevious (Atari, harder)  
+xeviousc   - Xevious (Atari, Namco PCB)  
+sxeviousj  - Super Xevious (Japan)  
 
-IMPORTANT! Super Xevious has an inverted freeze dip, which means you will need to enable/select it in the Namco dip switch configuration or the game will freeze at the crosshatch.
-
-5. Check the MAME driver for setting dip switch positions or search for 'xevious dip switch settings'.  You really won't need to do this if you accept the defaults after a fresh install.
-
-6. **Download and run the Xevious core**: Follow the instructions on
-  [this site](https://sy2002.github.io/m65cores/) to download and run the Xevious core on your MEGA65.
-
-7. **Common problems [WIP]**
-
-WIP
+IMPORTANT! Super Xevious has an inverted freeze dip, which means you will need to enable/select it in the Namco dip switch configuration or the game will freeze at the crosshatch.  
+5. Check the MAME driver for setting dip switch positions or search for 'xevious dip switch settings'.  You really won't need to do this if you accept the defaults after a fresh install.  
+6. **Download and run the Xevious core**: Follow the instructions on [this site](https://sy2002.github.io/m65cores/) to download and run the Xevious core on your MEGA65.  
+7. **Common problems [WIP]**  
 
 
     
