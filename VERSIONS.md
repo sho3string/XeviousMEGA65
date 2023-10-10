@@ -1,5 +1,5 @@
-Version 0.5.0 - October 2, 2023
-===============================
+Version 0.5.0 - October 10, 2023
+================================
 
 Xevious/Super Xevious for the MEGA65 version 0.5.0 is based on this version 1.0.0 of the MiSTer2MEGA65 framework.
 
@@ -13,11 +13,11 @@ Despite being labeled as a "beta" release, the game is entirely playable with no
 * Joystick ports can be flipped via the OSD
 * Ability to save OSD/Menu settings
 * Fully configurable DIP switches
-* Holding down the fire button triggers bombs ( Delay time is configurable up to 1/2 a second )
+* Screen can be flipped horizontally via OSD
+* Holding down the fire button triggers bombs ( Delay time is configurable up to 1/2 a second maximum )
 
 ## Constraints 
 * Core does not support dynamic ROM loading yet
-* Screen can't be flipped horizontally in rotate mode
 * No Vsync/Hsync adjustment
 * Aspect ratio is currently fixed
 * No autosave of highscores is supported
